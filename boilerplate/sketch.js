@@ -1,7 +1,8 @@
 function setup() {
-    createCanvas(400, 400)
-    background(0)
+    let canvas = createCanvas(windowWidth, windowHeight)
+    canvas.position(0, 0)
+    background(200)
 }
-function draw() { 
-    
+function draw() {
+
 }
