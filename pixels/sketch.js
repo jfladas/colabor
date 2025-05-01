@@ -10,20 +10,26 @@ let y = 0
 let step
 
 function setup() {
-    //let canvas = createCanvas(windowWidth, windowWidth)
-    let canvas = createCanvas(windowWidth, windowHeight)
-    canvas.position(0, 0)
+    let side = windowWidth < windowHeight ? windowWidth : windowHeight
+    if (side > pixelSize * 300) {
+        side = pixelSize * 300
+    }
+    let canvas = createCanvas(side, side)
+    //let canvas = createCanvas(windowWidth, windowHeight)
+    canvas.position((windowWidth - side) / 2, (windowHeight - side) / 2)
     background(200)
     noStroke()
-    frameRate(60)
+    frameRate(10)
 
-    //rows = ceil(windowWidth / pixelSize)
-    rows = ceil(windowHeight / pixelSize)
-    cols = ceil(windowWidth / pixelSize)
+    rows = ceil(side / pixelSize)
+    cols = ceil(side / pixelSize)
+    //rows = ceil(windowHeight / pixelSize)
+    //cols = ceil(windowWidth / pixelSize)
 
-    mode = 'checkered'
-    step = 0.6
+    mode = 'horizontal'
+    step = 0.51
 
+    pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
     resetPixels()
 
     //obstructRect(20, 200, 200, 250)
@@ -46,7 +52,7 @@ function draw() {
     drawPixels()
     resetPixels()
     if (height < 100 && height > 0) {
-        frameRate(60)
+        frameRate(10)
         height += speed
         if (height > 100) {
             height = 100
@@ -73,7 +79,7 @@ function draw() {
     if (mouseIsPressed) {
         frameRate(1)
     } else {
-        frameRate(60)
+        frameRate(10)
     }
     */
 
@@ -84,34 +90,31 @@ function draw() {
     //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'left')
     //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'right')
 
-    moireCircleMasked(50, ceil(cols / 2), ceil(rows / 2), step, 'top')
-    moireCircleMasked(50, ceil(cols / 2), ceil(rows / 2), step, 'left')
-    step += 0.01
+    moireCircleMasked(60, ceil(cols / 2), ceil(rows / 2), step, 'top')
+    moireCircleMasked(60, ceil(cols / 2), ceil(rows / 2), step, 'left')
+    step += 0.005
 
     drawPixels()
     displayStep()
+    displayFps()
 }
 
 function drawPixels() {
     clear()
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-            if (pixels[j][i] == 0) {
-                fill(255)
-            } else {
+            if (pixels[j][i] != 0) {
                 fill(0)
+                square(i * pixelSize, j * pixelSize, pixelSize)
             }
-            square(i * pixelSize, j * pixelSize, pixelSize)
         }
     }
 }
 
 function resetPixels() {
     switch (mode) {
-        default:
         case 'horizontal':
             for (let i = 0; i < rows; i++) {
-                pixels[i] = []
                 for (let j = 0; j < cols; j++) {
                     if (i % 2 == 0) {
                         pixels[i][j] = 0
@@ -123,7 +126,6 @@ function resetPixels() {
             break
         case 'vertical':
             for (let i = 0; i < rows; i++) {
-                pixels[i] = []
                 for (let j = 0; j < cols; j++) {
                     if (j % 2 == 0) {
                         pixels[i][j] = 0
@@ -135,7 +137,6 @@ function resetPixels() {
             break
         case 'checkered':
             for (let i = 0; i < rows; i++) {
-                pixels[i] = []
                 for (let j = 0; j < cols; j++) {
                     if ((i + j) % 2 == 0) {
                         pixels[i][j] = 0
@@ -147,7 +148,6 @@ function resetPixels() {
             break
         case 'rectangle':
             for (let i = 0; i < rows; i++) {
-                pixels[i] = []
                 for (let j = 0; j < cols; j++) {
                     if (
                         (i > j && rows - i > j && j < (cols / 2)) ||
@@ -169,9 +169,9 @@ function resetPixels() {
                 }
             }
             break
+        default:
         case 'blank':
             for (let i = 0; i < rows; i++) {
-                pixels[i] = []
                 for (let j = 0; j < cols; j++) {
                     pixels[i][j] = 0
                 }
@@ -187,6 +187,15 @@ function displayStep() {
     textFont('Courier New');
     textStyle(BOLD);
     text(`${step.toFixed(2)}`, width - 10, 10);
+}
+
+function displayFps() {
+    fill(0);
+    textSize(32);
+    textAlign(LEFT, TOP);
+    textFont('Courier New');
+    textStyle(BOLD);
+    text(`FPS: ${round(frameRate(), 2)}`, 10, 10);
 }
 
 function addRandomRects() {
@@ -291,7 +300,7 @@ function obstructRect(startX, startY, endX, endY) {
 function invertCircle(radius, x, y) {
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-            if (dist(i, j, x, y) < radius) {
+            if (distSq(i, j, x, y) < radius ** 2) {
                 if (pixels[j][i] == 0) {
                     pixels[j][i] = 1
                 } else {
@@ -305,8 +314,8 @@ function invertCircle(radius, x, y) {
 function invertCircleMasked(radius, x, y, maskRadius, maskX, maskY) {
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-            if (dist(i, j, x, y) < radius) {
-                if (dist(i, j, maskX, maskY) < maskRadius) {
+            if (distSq(i, j, x, y) < radius ** 2) {
+                if (distSq(i, j, maskX, maskY) < maskRadius ** 2) {
                     if (pixels[j][i] == 0) {
                         pixels[j][i] = 1
                     } else {
@@ -322,7 +331,7 @@ function obstructCircle(radius, x, y) {
     if (mode == 'vertical') {
         for (let i = 0; i < cols; i++) {
             for (let j = 0; j < rows; j++) {
-                if (floor(dist(i, j, x, y)) <= radius) {
+                if (distSq(i, j, x, y) <= radius ** 2) {
                     pixels[j][i] = pixels[j][i - 1]
                 }
             }
@@ -330,7 +339,7 @@ function obstructCircle(radius, x, y) {
     } else {
         for (let i = 0; i < cols; i++) {
             for (let j = 0; j < rows; j++) {
-                if (floor(dist(i, j, x, y)) <= radius) {
+                if (distSq(i, j, x, y) <= radius ** 2) {
                     pixels[j][i] = pixels[j - 1][i]
                 }
             }
@@ -344,7 +353,7 @@ function resetCircle(radius, x, y) {
         case 'horizontal':
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
-                    if (dist(i, j, x, y) < radius) {
+                    if (distSq(i, j, x, y) < radius ** 2) {
                         if (j % 2 == 0) {
                             pixels[j][i] = 0
                         } else {
@@ -357,7 +366,7 @@ function resetCircle(radius, x, y) {
         case 'vertical':
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
-                    if (dist(i, j, x, y) < radius) {
+                    if (distSq(i, j, x, y) < radius ** 2) {
                         if (i % 2 == 0) {
                             pixels[j][i] = 0
                         } else {
@@ -370,7 +379,7 @@ function resetCircle(radius, x, y) {
         case 'checkered':
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
-                    if (dist(i, j, x, y) < radius) {
+                    if (distSq(i, j, x, y) < radius ** 2) {
                         if ((i + j) % 2 == 0) {
                             pixels[j][i] = 0
                         } else {
@@ -385,13 +394,9 @@ function resetCircle(radius, x, y) {
 
 function raisedCircle(radius, x, y, height = 1) {
     obstructCircle(radius, x, y)
-    resetCircle(radius, x, y - ceil(radius / 5 * height))
-    let static = 0
-    if (height == 1) {
-        static = 1
-    }
+    resetCircle(radius, x, y - ceil(radius / 3 * height))
     if (height != 0) {
-        invertCircle(radius, x, y - ceil(radius / 5 * height) - static)
+        invertCircle(radius, x, y - ceil(radius / 3 * height))
     } else {
         resetCircle(radius + 1, x, y)
     }
@@ -456,4 +461,8 @@ function moireCircleMasked(radius, x, y, s, dir = 'top') {
         invertCircle(radius, x, y)
 
     }
+}
+
+function distSq(x1, y1, x2, y2) {
+    return (x1 - x2) ** 2 + (y1 - y2) ** 2;
 }
