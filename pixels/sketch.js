@@ -10,17 +10,19 @@ let y = 0
 let step
 
 function setup() {
+    //let canvas = createCanvas(windowWidth, windowWidth)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
     background(200)
     noStroke()
     frameRate(60)
 
+    //rows = ceil(windowWidth / pixelSize)
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
 
     mode = 'checkered'
-    step = 0.5
+    step = 0.6
 
     resetPixels()
 
@@ -41,6 +43,7 @@ function draw() {
     //addRandomRects()
 
     /*
+    drawPixels()
     resetPixels()
     if (height < 100 && height > 0) {
         frameRate(60)
@@ -64,6 +67,7 @@ function draw() {
     */
 
     /*
+    step = 2
     y += step
     invertCircle(100 * (y / 500), ceil(cols / 2), y - 100)
     if (mouseIsPressed) {
@@ -82,7 +86,6 @@ function draw() {
 
     moireCircleMasked(50, ceil(cols / 2), ceil(rows / 2), step, 'top')
     moireCircleMasked(50, ceil(cols / 2), ceil(rows / 2), step, 'left')
-
     step += 0.01
 
     drawPixels()
@@ -90,6 +93,7 @@ function draw() {
 }
 
 function drawPixels() {
+    clear()
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             if (pixels[j][i] == 0) {
@@ -138,6 +142,38 @@ function resetPixels() {
                     } else {
                         pixels[i][j] = 1
                     }
+                }
+            }
+            break
+        case 'rectangle':
+            for (let i = 0; i < rows; i++) {
+                pixels[i] = []
+                for (let j = 0; j < cols; j++) {
+                    if (
+                        (i > j && rows - i > j && j < (cols / 2)) ||
+                        (i > (cols - j) && rows - i > (cols - j) && j >= (cols / 2))
+                    ) {
+                        if (j % 2 == 0) {
+                            pixels[i][j] = 0
+                        } else {
+                            pixels[i][j] = 1
+                        }
+                    }
+                    else {
+                        if (i % 2 == 0) {
+                            pixels[i][j] = 0
+                        } else {
+                            pixels[i][j] = 1
+                        }
+                    }
+                }
+            }
+            break
+        case 'blank':
+            for (let i = 0; i < rows; i++) {
+                pixels[i] = []
+                for (let j = 0; j < cols; j++) {
+                    pixels[i][j] = 0
                 }
             }
             break
