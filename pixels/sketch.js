@@ -9,6 +9,9 @@ let speed = 10
 let y = 0
 let step
 
+let video
+let vidPixels = []
+
 function setup() {
     let side = windowWidth < windowHeight ? windowWidth : windowHeight
     if (side > pixelSize * 300) {
@@ -30,6 +33,7 @@ function setup() {
     step = 0.51
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
+    vidPixels = Array.from({ length: rows }, () => Array(cols).fill(0))
     resetPixels()
 
     //obstructRect(20, 200, 200, 250)
@@ -42,6 +46,10 @@ function setup() {
     //resetCircle(20, 100, 100)
 
     //raisedCircle(50, ceil(cols / 2), ceil(rows / 2))
+
+    video = createCapture(VIDEO)
+    video.size(cols, rows)
+    video.hide()
 }
 
 function draw() {
@@ -93,6 +101,8 @@ function draw() {
     moireCircleMasked(60, ceil(cols / 2), ceil(rows / 2), step, 'top')
     moireCircleMasked(60, ceil(cols / 2), ceil(rows / 2), step, 'left')
     step += 0.005
+
+    obstructVideo()
 
     drawPixels()
     displayStep()
@@ -181,21 +191,27 @@ function resetPixels() {
 }
 
 function displayStep() {
-    fill(0);
     textSize(32);
     textAlign(RIGHT, TOP);
     textFont('Courier New');
     textStyle(BOLD);
+    fill(255);
+    text(`${step.toFixed(2)}`, width - 12, 10);
+    text(`${step.toFixed(2)}`, width - 8, 10);
+    fill(0);
     text(`${step.toFixed(2)}`, width - 10, 10);
 }
 
 function displayFps() {
-    fill(0);
     textSize(32);
     textAlign(LEFT, TOP);
     textFont('Courier New');
     textStyle(BOLD);
-    text(`FPS: ${round(frameRate(), 2)}`, 10, 10);
+    fill(255);
+    text(`FPS: ${frameRate().toFixed(2)} `, 8, 10);
+    text(`FPS: ${frameRate().toFixed(2)} `, 12, 10);
+    fill(0);
+    text(`FPS: ${frameRate().toFixed(2)} `, 10, 10);
 }
 
 function addRandomRects() {
@@ -465,4 +481,28 @@ function moireCircleMasked(radius, x, y, s, dir = 'top') {
 
 function distSq(x1, y1, x2, y2) {
     return (x1 - x2) ** 2 + (y1 - y2) ** 2;
+}
+
+function obstructVideo() {
+    video.loadPixels();
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            let index = (j * video.width + i) * 4
+            let brightness = (video.pixels[index] + video.pixels[index + 1] + video.pixels[index + 2]) / 3
+            vidPixels[j][cols - i - 1] = brightness > 100 ? 1 : 0
+        }
+    }
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            if (vidPixels[j][i] == 1) {
+                if (mode == 'vertical' && i > 0) {
+                    pixels[j][i] = pixels[j][i - 1]
+                } else if (mode != 'vertical' && j > 0) {
+                    pixels[j][i] = pixels[j - 1][i]
+                } else {
+                    pixels[j][i] = 1
+                }
+            }
+        }
+    }
 }
