@@ -1,12 +1,13 @@
 let pixelSize = 3
 let pixels = []
 let rows, cols
+let mode
 
 let height = 1
 let speed = 10
 
 let y = 0
-let step = 1
+let step
 
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -14,6 +15,12 @@ function setup() {
     background(200)
     noStroke()
     frameRate(60)
+
+    rows = ceil(windowHeight / pixelSize)
+    cols = ceil(windowWidth / pixelSize)
+
+    mode = 'checkered'
+    step = 0.5
 
     resetPixels()
 
@@ -30,16 +37,6 @@ function setup() {
 }
 
 function draw() {
-    for (let i = 0; i < pixels[0].length; i++) {
-        for (let j = 0; j < pixels.length; j++) {
-            if (pixels[j][i] == 0) {
-                fill(255)
-            } else {
-                fill(0)
-            }
-            square(i * pixelSize, j * pixelSize, pixelSize)
-        }
-    }
 
     //addRandomRects()
 
@@ -66,6 +63,7 @@ function draw() {
     raisedCircle(60, ceil(cols / 2), ceil(rows / 2), height / 100)
     */
 
+    /*
     y += step
     invertCircle(100 * (y / 500), ceil(cols / 2), y - 100)
     if (mouseIsPressed) {
@@ -73,22 +71,86 @@ function draw() {
     } else {
         frameRate(60)
     }
+    */
+
+    resetPixels()
+
+    //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'top')
+    //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'bottom')
+    //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'left')
+    //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'right')
+
+    moireCircleMasked(50, ceil(cols / 2), ceil(rows / 2), step, 'top')
+    moireCircleMasked(50, ceil(cols / 2), ceil(rows / 2), step, 'left')
+
+    step += 0.01
+
+    drawPixels()
+    displayStep()
+}
+
+function drawPixels() {
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            if (pixels[j][i] == 0) {
+                fill(255)
+            } else {
+                fill(0)
+            }
+            square(i * pixelSize, j * pixelSize, pixelSize)
+        }
+    }
 }
 
 function resetPixels() {
-    rows = ceil(windowHeight / pixelSize)
-    cols = ceil(windowWidth / pixelSize)
-
-    for (let i = 0; i < rows; i++) {
-        pixels[i] = []
-        for (let j = 0; j < cols; j++) {
-            if (i % 2 == 0) {
-                pixels[i][j] = 0
-            } else {
-                pixels[i][j] = 1
+    switch (mode) {
+        default:
+        case 'horizontal':
+            for (let i = 0; i < rows; i++) {
+                pixels[i] = []
+                for (let j = 0; j < cols; j++) {
+                    if (i % 2 == 0) {
+                        pixels[i][j] = 0
+                    } else {
+                        pixels[i][j] = 1
+                    }
+                }
             }
-        }
+            break
+        case 'vertical':
+            for (let i = 0; i < rows; i++) {
+                pixels[i] = []
+                for (let j = 0; j < cols; j++) {
+                    if (j % 2 == 0) {
+                        pixels[i][j] = 0
+                    } else {
+                        pixels[i][j] = 1
+                    }
+                }
+            }
+            break
+        case 'checkered':
+            for (let i = 0; i < rows; i++) {
+                pixels[i] = []
+                for (let j = 0; j < cols; j++) {
+                    if ((i + j) % 2 == 0) {
+                        pixels[i][j] = 0
+                    } else {
+                        pixels[i][j] = 1
+                    }
+                }
+            }
+            break
     }
+}
+
+function displayStep() {
+    fill(0);
+    textSize(32);
+    textAlign(RIGHT, TOP);
+    textFont('Courier New');
+    textStyle(BOLD);
+    text(`${step.toFixed(2)}`, width - 10, 10);
 }
 
 function addRandomRects() {
@@ -135,11 +197,11 @@ function invertRect(startX, startY, endX, endY) {
         startY = endY
         endY = temp
     }
-    if (endX > pixels[0].length) {
-        endX = pixels[0].length
+    if (endX > cols) {
+        endX = cols
     }
-    if (endY > pixels.length) {
-        endY = pixels.length
+    if (endY > rows) {
+        endY = rows
     }
     for (let i = startX; i < endX; i++) {
         for (let j = startY; j < endY; j++) {
@@ -163,11 +225,11 @@ function obstructRect(startX, startY, endX, endY) {
         startY = endY
         endY = temp
     }
-    if (endX > pixels[0].length) {
-        endX = pixels[0].length
+    if (endX > cols) {
+        endX = cols
     }
-    if (endY > pixels.length) {
-        endY = pixels.length
+    if (endY > rows) {
+        endY = rows
     }
     let length = random(5, 20)
     let counter = 0
@@ -191,8 +253,8 @@ function obstructRect(startX, startY, endX, endY) {
 }
 
 function invertCircle(radius, x, y) {
-    for (let i = 0; i < pixels[0].length; i++) {
-        for (let j = 0; j < pixels.length; j++) {
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
             if (dist(i, j, x, y) < radius) {
                 if (pixels[j][i] == 0) {
                     pixels[j][i] = 1
@@ -204,28 +266,84 @@ function invertCircle(radius, x, y) {
     }
 }
 
-function obstructCircle(radius, x, y) {
-    for (let i = 0; i < pixels[0].length; i++) {
-        for (let j = 0; j < pixels.length; j++) {
-            if (floor(dist(i, j, x, y)) <= radius) {
-                pixels[j][i] = pixels[j - 1][i]
-            }
-        }
-    }
-
-}
-
-function resetCircle(radius, x, y) {
-    for (let i = 0; i < pixels[0].length; i++) {
-        for (let j = 0; j < pixels.length; j++) {
+function invertCircleMasked(radius, x, y, maskRadius, maskX, maskY) {
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
             if (dist(i, j, x, y) < radius) {
-                if (j % 2 == 0) {
-                    pixels[j][i] = 0
-                } else {
-                    pixels[j][i] = 1
+                if (dist(i, j, maskX, maskY) < maskRadius) {
+                    if (pixels[j][i] == 0) {
+                        pixels[j][i] = 1
+                    } else {
+                        pixels[j][i] = 0
+                    }
                 }
             }
         }
+    }
+}
+
+function obstructCircle(radius, x, y) {
+    if (mode == 'vertical') {
+        for (let i = 0; i < cols; i++) {
+            for (let j = 0; j < rows; j++) {
+                if (floor(dist(i, j, x, y)) <= radius) {
+                    pixels[j][i] = pixels[j][i - 1]
+                }
+            }
+        }
+    } else {
+        for (let i = 0; i < cols; i++) {
+            for (let j = 0; j < rows; j++) {
+                if (floor(dist(i, j, x, y)) <= radius) {
+                    pixels[j][i] = pixels[j - 1][i]
+                }
+            }
+        }
+    }
+}
+
+function resetCircle(radius, x, y) {
+    switch (mode) {
+        default:
+        case 'horizontal':
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    if (dist(i, j, x, y) < radius) {
+                        if (j % 2 == 0) {
+                            pixels[j][i] = 0
+                        } else {
+                            pixels[j][i] = 1
+                        }
+                    }
+                }
+            }
+            break
+        case 'vertical':
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    if (dist(i, j, x, y) < radius) {
+                        if (i % 2 == 0) {
+                            pixels[j][i] = 0
+                        } else {
+                            pixels[j][i] = 1
+                        }
+                    }
+                }
+            }
+            break
+        case 'checkered':
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    if (dist(i, j, x, y) < radius) {
+                        if ((i + j) % 2 == 0) {
+                            pixels[j][i] = 0
+                        } else {
+                            pixels[j][i] = 1
+                        }
+                    }
+                }
+            }
+            break
     }
 }
 
@@ -240,5 +358,66 @@ function raisedCircle(radius, x, y, height = 1) {
         invertCircle(radius, x, y - ceil(radius / 5 * height) - static)
     } else {
         resetCircle(radius + 1, x, y)
+    }
+}
+
+function moireCircle(radius, x, y, s, dir = 'top') {
+    let offset = rows
+    if (rows < cols) {
+        offset = cols
+    }
+    switch (dir) {
+        default:
+        case 'top':
+            for (let i = 0; i < offset; i += s) {
+                invertCircle(radius, x, -offset + y + i)
+            }
+            break
+        case 'bottom':
+            for (let i = 0; i < offset; i += s) {
+                invertCircle(radius, x, offset + y - i)
+            }
+            break
+        case 'left':
+            for (let i = 0; i < offset; i += s) {
+                invertCircle(radius, -offset + x + i, y)
+            }
+            break
+        case 'right':
+            for (let i = 0; i < offset; i += s) {
+                invertCircle(radius, offset + x - i, y)
+            }
+            break
+    }
+}
+
+function moireCircleMasked(radius, x, y, s, dir = 'top') {
+    let offset = 2 * radius
+    switch (dir) {
+        default:
+        case 'top':
+            for (let i = 0; i < offset; i += s) {
+                invertCircleMasked(radius, x, -offset + y + i, radius, x, y)
+            }
+            break
+        case 'bottom':
+            for (let i = 0; i < offset; i += s) {
+                invertCircleMasked(radius, x, offset + y - i, radius, x, y)
+            }
+            break
+        case 'left':
+            for (let i = 0; i < offset; i += s) {
+                invertCircleMasked(radius, -offset + x + i, y, radius, x, y)
+            }
+            break
+        case 'right':
+            for (let i = 0; i < offset; i += s) {
+                invertCircleMasked(radius, offset + x - i, y, radius, x, y)
+            }
+            break
+    }
+    if (floor(offset / s) % 2 == 0) {
+        invertCircle(radius, x, y)
+
     }
 }
