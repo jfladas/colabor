@@ -46,16 +46,16 @@ function drawGrid() {
 
             fill(255)
             ellipse(centerX - eyeDistance, centerY, grid * 0.3, grid * 0.3);
-            diffX = map(xx, centerX - width / 2, centerX + width / 2, -grid * 0.1, grid * 0.1);
-            diffY = map(yy, centerY - height / 2, centerY + height / 2, -grid * 0.1, grid * 0.1);
+            diffX = map(xx, centerX - width / 2, centerX + width / 2, -grid * 0.07, grid * 0.07);
+            diffY = map(yy, centerY - height / 2, centerY + height / 2, -grid * 0.07, grid * 0.07);
 
             fill(0);
             ellipse(centerX - eyeDistance + diffX, centerY + diffY, grid * 0.2, grid * 0.2);
 
             fill(255)
             ellipse(centerX + eyeDistance, centerY, grid * 0.3, grid * 0.3);
-            diffX = map(xx, centerX - width / 2, centerX + width / 2, -grid * 0.1, grid * 0.1);
-            diffY = map(yy, centerY - height / 2, centerY + height / 2, -grid * 0.1, grid * 0.1);
+            diffX = map(xx, centerX - width / 2, centerX + width / 2, -grid * 0.07, grid * 0.07);
+            diffY = map(yy, centerY - height / 2, centerY + height / 2, -grid * 0.07, grid * 0.07);
 
             fill(0);
             ellipse(centerX + eyeDistance + diffX, centerY + diffY, grid * 0.2, grid * 0.2);
