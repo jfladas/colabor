@@ -14,9 +14,6 @@ let vidPixels = []
 
 function setup() {
     let side = windowWidth < windowHeight ? windowWidth : windowHeight
-    if (side > pixelSize * 300) {
-        side = pixelSize * 300
-    }
     let canvas = createCanvas(side, side)
     //let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position((windowWidth - side) / 2, (windowHeight - side) / 2)
@@ -29,7 +26,7 @@ function setup() {
     //rows = ceil(windowHeight / pixelSize)
     //cols = ceil(windowWidth / pixelSize)
 
-    mode = 'horizontal'
+    mode = 'checkered'
     step = 0.51
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
@@ -107,6 +104,10 @@ function draw() {
     drawPixels()
     displayStep()
     displayFps()
+
+    if (keyIsPressed && key === ' ') {
+        noLoop();
+    }
 }
 
 function drawPixels() {
@@ -489,7 +490,7 @@ function obstructVideo() {
         for (let j = 0; j < rows; j++) {
             let index = (j * video.width + i) * 4
             let brightness = (video.pixels[index] + video.pixels[index + 1] + video.pixels[index + 2]) / 3
-            vidPixels[j][cols - i - 1] = brightness > 100 ? 1 : 0
+            vidPixels[j][cols - i - 1] = brightness > 100 ? 0 : 1
         }
     }
     for (let i = 0; i < cols; i++) {

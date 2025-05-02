@@ -1,0 +1,43 @@
+body {
+    overflow: hidden;
+}
+
+.blink {
+    background-color: black;
+}
+
+.top {
+    animation: blink-top 1s ease;
+}
+
+.bottom {
+    animation: blink-bottom 1s ease;
+}
+
+@keyframes blink-bottom {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-50%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink-top {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(50%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
