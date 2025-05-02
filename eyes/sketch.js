@@ -1,8 +1,7 @@
 let xx = 0;
 let yy = 0;
 
-let tilesX = 5;
-let tilesY = 13;
+let tilesX, tilesY;
 let gridX, gridY, grid;
 let centerX, centerY;
 let eyeDistance;
@@ -10,6 +9,11 @@ let eyeDistance;
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight);
     canvas.position(0, 0);
+
+    tilesX = floor(width / 100);
+    tilesY = floor(height / 80);
+
+
     gridX = width / tilesX;
     gridY = height / tilesY;
     grid = gridX < gridY ? gridX : gridY;
