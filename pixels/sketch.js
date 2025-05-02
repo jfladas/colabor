@@ -1,4 +1,4 @@
-let pixelSize = 3
+let pixelSize
 let pixels = []
 let rows, cols
 let mode
@@ -20,6 +20,8 @@ function setup() {
     background(200)
     noStroke()
     frameRate(10)
+
+    pixelSize = floor(side / 150)
 
     rows = ceil(side / pixelSize)
     cols = ceil(side / pixelSize)
