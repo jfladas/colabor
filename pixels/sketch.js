@@ -14,26 +14,26 @@ let vidPixels = []
 
 function setup() {
     let side = windowWidth < windowHeight ? windowWidth : windowHeight
-    let canvas = createCanvas(side, side)
-    //let canvas = createCanvas(windowWidth, windowHeight)
-    canvas.position((windowWidth - side) / 2, (windowHeight - side) / 2)
+    //let canvas = createCanvas(side, side)
+    let canvas = createCanvas(windowWidth, windowHeight)
+    //canvas.position((windowWidth - side) / 2, (windowHeight - side) / 2)
+    canvas.position(0, 0)
     background(200)
     noStroke()
     frameRate(10)
 
     pixelSize = floor(side / 150)
 
-    rows = ceil(side / pixelSize)
-    cols = ceil(side / pixelSize)
-    //rows = ceil(windowHeight / pixelSize)
-    //cols = ceil(windowWidth / pixelSize)
+    //rows = ceil(side / pixelSize)
+    //cols = ceil(side / pixelSize)
+    rows = ceil(windowHeight / pixelSize)
+    cols = ceil(windowWidth / pixelSize)
 
-    mode = 'checkered'
+    mode = 'horizontal'
     step = 0.51
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
     vidPixels = Array.from({ length: rows }, () => Array(cols).fill(0))
-    resetPixels()
 
     //obstructRect(20, 200, 200, 250)
     //invertRect(50, 50, 100, 220)
@@ -53,45 +53,46 @@ function setup() {
 
 function draw() {
 
-    //addRandomRects()
-
-    /*
     drawPixels()
     resetPixels()
-    if (height < 100 && height > 0) {
-        frameRate(10)
-        height += speed
-        if (height > 100) {
-            height = 100
-        }
-        if (height < 0) {
-            height = 0
-        }
-    } else {
-        frameRate(1)
-        if (speed > 0) {
-            height = 91
+
+    /* 
+        // Button
+        if (height < 100 && height > 0) {
+            frameRate(10)
+            height += speed
+            if (height > 100) {
+                height = 100
+            }
+            if (height < 0) {
+                height = 0
+            }
         } else {
-            height = 9
+            frameRate(1)
+            if (speed > 0) {
+                height = 91
+            } else {
+                height = 9
+            }
+            speed = -speed
         }
-        speed = -speed
-    }
-    raisedCircle(60, ceil(cols / 2), ceil(rows / 2), height / 100)
-    */
+        raisedCircle(60, ceil(cols / 2), ceil(rows / 2), height / 100)
+     */
 
-    /*
-    step = 2
-    y += step
-    invertCircle(100 * (y / 500), ceil(cols / 2), y - 100)
-    if (mouseIsPressed) {
-        frameRate(1)
-    } else {
-        frameRate(10)
-    }
-    */
+    /* 
+        // Simple Moire (disable reset)
+        step = 2
+        y += step
+        invertCircle(100 * (y / 500), ceil(cols / 2), y - 100)
+        if (mouseIsPressed) {
+            frameRate(1)
+        } else {
+            frameRate(10)
+        }
+     */
 
-    resetPixels()
 
+    // Moire
     //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'top')
     //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'bottom')
     //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'left')
@@ -103,9 +104,9 @@ function draw() {
 
     obstructVideo()
 
-    drawPixels()
     displayStep()
     displayFps()
+
 
     if (keyIsPressed && key === ' ') {
         noLoop();
@@ -183,10 +184,17 @@ function resetPixels() {
             }
             break
         default:
-        case 'blank':
+        case 'white':
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
                     pixels[i][j] = 0
+                }
+            }
+            break
+        case 'black':
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    pixels[i][j] = 1
                 }
             }
             break
