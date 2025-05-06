@@ -3,17 +3,17 @@ let pixels = []
 let rows, cols
 let mode
 
-let height = 1
-let speed = 10
+let height = 0.01
+let speed = 0.1
 
 let y = 0
-let step
+let step, dir = 1
 
 let video
 let vidPixels = []
 
 function setup() {
-    let side = windowWidth < windowHeight ? windowWidth : windowHeight
+    let side = min(windowWidth, windowHeight)
     //let canvas = createCanvas(side, side)
     let canvas = createCanvas(windowWidth, windowHeight)
     //canvas.position((windowWidth - side) / 2, (windowHeight - side) / 2)
@@ -35,14 +35,16 @@ function setup() {
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
     vidPixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
-    //obstructRect(20, 200, 200, 250)
-    //invertRect(50, 50, 100, 220)
+    resetPixels()
+
+    //obstructRect(20, 20, 100, 100)
+    //invertRect(50, 50, 150, 150)
 
     //addRandomRects()
 
-    //obstructCircle(50, 80, 150)
-    //invertCircle(20, 60, 200)
-    //resetCircle(20, 100, 100)
+    //obstructCircle(50, 80, 100)
+    //invertCircle(20, 60, 150)
+    //resetCircle(20, 100, 50)
 
     //raisedCircle(50, ceil(cols / 2), ceil(rows / 2))
 
@@ -56,32 +58,38 @@ function draw() {
     drawPixels()
     resetPixels()
 
-    /* 
-        // Button
-        if (height < 100 && height > 0) {
-            frameRate(10)
-            height += speed
-            if (height > 100) {
-                height = 100
-            }
-            if (height < 0) {
-                height = 0
-            }
-        } else {
-            frameRate(1)
-            if (speed > 0) {
-                height = 91
-            } else {
-                height = 9
-            }
-            speed = -speed
+    // Button
+    /*
+    if (height < 1 && height > 0) {
+        frameRate(10)
+        height += speed
+        if (height > 1) {
+            height = 1
         }
-        raisedCircle(60, ceil(cols / 2), ceil(rows / 2), height / 100)
+        if (height < 0) {
+            height = 0
+        }
+    } else {
+        frameRate(1)
+        if (speed > 0) {
+            height = 0.91
+        } else {
+            height = 0.09
+        }
+        speed = -speed
+    }
+    */
+    /* 
+        height = 1 - mouseY / windowHeight
+        if (height < 0.01) {
+            height = 0
+        }
+        raisedCircle(60, ceil(cols / 2), ceil(rows / 2) + 5, height)
      */
 
     /* 
         // Simple Moire (disable reset)
-        step = 2
+        step = 1
         y += step
         invertCircle(100 * (y / 500), ceil(cols / 2), y - 100)
         if (mouseIsPressed) {
@@ -92,15 +100,13 @@ function draw() {
      */
 
 
-    // Moire
-    //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'top')
-    //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'bottom')
-    //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'left')
-    //moireCircle(50, ceil(cols / 2), ceil(rows / 2), step, 'right')
-
+    // Moire Masked
     moireCircleMasked(60, ceil(cols / 2), ceil(rows / 2), step, 'top')
     moireCircleMasked(60, ceil(cols / 2), ceil(rows / 2), step, 'left')
-    step += 0.005
+    if (step >= 3 || step <= 0.5) {
+        dir = -dir
+    }
+    step += 0.005 * dir;
 
     obstructVideo()
 
@@ -204,7 +210,7 @@ function resetPixels() {
 function displayStep() {
     textSize(32);
     textAlign(RIGHT, TOP);
-    textFont('Courier New');
+    textFont('monospace');
     textStyle(BOLD);
     fill(255);
     text(`${step.toFixed(2)}`, width - 12, 10);
@@ -216,7 +222,7 @@ function displayStep() {
 function displayFps() {
     textSize(32);
     textAlign(LEFT, TOP);
-    textFont('Courier New');
+    textFont('monospace');
     textStyle(BOLD);
     fill(255);
     text(`FPS: ${frameRate().toFixed(2)} `, 8, 10);
@@ -277,11 +283,7 @@ function invertRect(startX, startY, endX, endY) {
     }
     for (let i = startX; i < endX; i++) {
         for (let j = startY; j < endY; j++) {
-            if (pixels[j][i] == 0) {
-                pixels[j][i] = 1
-            } else {
-                pixels[j][i] = 0
-            }
+            pixels[j][i] = 1 - pixels[j][i];
         }
     }
 }
@@ -328,11 +330,7 @@ function invertCircle(radius, x, y) {
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             if (distSq(i, j, x, y) < radius ** 2) {
-                if (pixels[j][i] == 0) {
-                    pixels[j][i] = 1
-                } else {
-                    pixels[j][i] = 0
-                }
+                pixels[j][i] = 1 - pixels[j][i];
             }
         }
     }
@@ -341,13 +339,9 @@ function invertCircle(radius, x, y) {
 function invertCircleMasked(radius, x, y, maskRadius, maskX, maskY) {
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-            if (distSq(i, j, x, y) < radius ** 2) {
-                if (distSq(i, j, maskX, maskY) < maskRadius ** 2) {
-                    if (pixels[j][i] == 0) {
-                        pixels[j][i] = 1
-                    } else {
-                        pixels[j][i] = 0
-                    }
+            if (distSq(i, j, maskX, maskY) < maskRadius ** 2) {
+                if (distSq(i, j, x, y) < radius ** 2) {
+                    pixels[j][i] = 1 - pixels[j][i];
                 }
             }
         }
@@ -412,6 +406,24 @@ function resetCircle(radius, x, y) {
                         } else {
                             pixels[j][i] = 1
                         }
+                    }
+                }
+            }
+            break
+        case 'white':
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    if (distSq(i, j, x, y) < radius ** 2) {
+                        pixels[j][i] = 0
+                    }
+                }
+            }
+            break
+        case 'black':
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    if (distSq(i, j, x, y) < radius ** 2) {
+                        pixels[j][i] = 1
                     }
                 }
             }
@@ -501,10 +513,7 @@ function obstructVideo() {
             let index = (j * video.width + i) * 4
             let brightness = (video.pixels[index] + video.pixels[index + 1] + video.pixels[index + 2]) / 3
             vidPixels[j][cols - i - 1] = brightness > 100 ? 0 : 1
-        }
-    }
-    for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
+
             if (vidPixels[j][i] == 1) {
                 if (mode == 'vertical' && i > 0) {
                     pixels[j][i] = pixels[j][i - 1]
