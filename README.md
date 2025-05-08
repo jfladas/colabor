@@ -1,7 +1,9 @@
 # colabor
 
-### [Pixels](https://jfladas.github.io/colabor/pixels/)
+## Sprint 1 - Re-Code Re-Think
 
-#### [Eyes](https://jfladas.github.io/colabor/eyes/)
+### [Pixels](https://jfladas.github.io/colabor/sprint1/pixels/)
 
-#### [Squares](https://jfladas.github.io/colabor/squares/)
+#### [Eyes](https://jfladas.github.io/colabor/sprint1/eyes/)
+
+#### [Squares](https://jfladas.github.io/colabor/sprint1/squares/)
