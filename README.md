@@ -1,6 +1,7 @@
-# colabor
+# +Colabor Creative Coding
 
-## Sprint 1 - Re-Code Re-Think
+## Sprint 1 
+*Re-Code Re-Think*
 
 ### [Pixels](https://jfladas.github.io/colabor/sprint1/pixels/)
 
