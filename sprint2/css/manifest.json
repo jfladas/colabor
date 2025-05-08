@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+    "name": "CSS Scrambler",
+    "version": "0.1",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "scrambler.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "scrambler.css",
+        "fonts/DINDong.woff2"
+    ],
+    "icons": {
+        "48": "icons/scrambler48.png",
+        "96": "icons/scrambler96.png"
+    },
+    "browser_action": {
+        "default_icon": "icons/scrambler96.png"
+    }
+}

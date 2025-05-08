@@ -1,0 +1,28 @@
+{
+
+    "manifest_version": 2,
+    "name": "Canvas P5",
+    "version": "1.0",
+
+    "description": "Creates a p5 canvas",
+
+    
+    "icons": {
+        "48": "p5js.svg"
+    },
+    
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["p5.min.js", "sketch.js"]
+    }],
+    "applications": {
+        "gecko": {
+            "id": "zuellig@internauta.ch"
+        }
+    },
+    "permissions": [
+        "<all_urls>",
+        "tabs"
+    ]
+
+}
