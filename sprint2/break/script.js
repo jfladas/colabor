@@ -1,14 +1,11 @@
 let head = document.getElementsByTagName('head')[0];
-let link = document.createElement('link');
-link.rel = 'stylesheet';
-link.type = 'text/css';
-link.href = browser.runtime.getURL("style.css");
-link.media = 'all';
-head.appendChild(link);
+
+let brokenness = 0;
 
 document.addEventListener('click', function (event) {
     console.log('Element clicked:', event.target);
     let element = event.target;
+    brokenness++;
     if (element.clientHeight < window.innerHeight / 2) {
         if (Math.random() < 0.5) {
             fallElement(element);
@@ -20,6 +17,9 @@ document.addEventListener('click', function (event) {
     }
     if (Math.random() < 0.5) {
         crackScreen(event.pageX, event.pageY);
+    }
+    if (brokenness > 10) {
+        showBSOD();
     }
 });
 
@@ -92,4 +92,33 @@ function crackScreen(x, y) {
     crack.style.transform = 'translate(-50%, -50%) rotate(' + (Math.random() * 360) + 'deg) scale(' + (Math.random() + 1) + ')';
 
     document.body.appendChild(crack);
+}
+
+function showBSOD() {
+    let bsod = document.createElement('div');
+    bsod.style.position = 'fixed';
+    bsod.style.left = '0';
+    bsod.style.top = '0';
+    bsod.style.width = '100%';
+    bsod.style.height = '100%';
+    bsod.style.backgroundColor = '#0000FF';
+    bsod.style.fontFamily = 'monospace';
+    bsod.style.fontSize = '50px';
+    bsod.style.textAlign = 'center';
+    bsod.style.zIndex = '9999';
+    bsod.style.color = 'white';
+    bsod.style.display = 'flex';
+    bsod.style.flexDirection = 'column';
+    bsod.style.justifyContent = 'center';
+    bsod.style.alignItems = 'center';
+    let smile = document.createElement('div');
+    smile.style.fontSize = '200px';
+    smile.style.marginBottom = '50px';
+    smile.textContent = ':(';
+    bsod.appendChild(smile);
+    let message = document.createElement('div');
+    message.textContent = 'You should consider taking a break.';
+    bsod.appendChild(message);
+
+    document.body.appendChild(bsod);
 }
