@@ -2,7 +2,7 @@ let head = document.getElementsByTagName('head')[0];
 let link = document.createElement('link');
 link.rel = 'stylesheet';
 link.type = 'text/css';
-link.href = browser.runtime.getURL("style.css");
+link.href = chrome.runtime.getURL("style.css");
 link.media = 'all';
 head.appendChild(link);
 
@@ -21,7 +21,7 @@ textElements.forEach(element => {
     }
     element.dataset.originalText = element.innerHTML;
     element.style.transition = 'color 5s ease, font-weight 5s ease, transform 5s ease';
-    element.style.fontFamily = 'Fredoka, sans-serif';
+    element.style.fontFamily = 'Georgia, sans-serif';
 });
 breatheIn();
 

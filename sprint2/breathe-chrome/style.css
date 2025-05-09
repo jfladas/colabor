@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
-
 body {
   animation: breathe 10s ease-in-out infinite !important;
   overflow-x: hidden !important;
-  font-family: 'Dongle', sans-serif !important;
+  font-family: 'Arial', sans-serif !important;
 }
 
 #overlay1,
