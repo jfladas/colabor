@@ -15,9 +15,7 @@ document.addEventListener('click', function (event) {
     } else {
         console.log('Element is too tall');
     }
-    if (Math.random() < 0.5) {
-        crackScreen(event.pageX, event.pageY);
-    }
+    crackScreen(event.pageX, event.pageY - window.scrollY);
     if (brokenness > 10) {
         showBSOD();
     }
