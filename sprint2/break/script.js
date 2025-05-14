@@ -69,16 +69,19 @@ function initializeMatterJS() {
     });
 
     document.addEventListener('click', function (event) {
-        console.log('Element clicked:', event.target);
-
-        if (event.target.tagName.toLowerCase() === 'a') {
+        let target = event.target;
+        while (target && target.parentElement) {
+            if (target.parentElement.clientHeight > 100) {
+                break;
+            }
+            target = target.parentElement;
+        }
+        if (target.tagName.toLowerCase() === 'a') {
             event.preventDefault();
         }
-
-        let element = event.target;
         brokenness++;
-        if (element.clientHeight < window.innerHeight * 0.8) {
-            fallElement(element);
+        if (target.clientHeight < window.innerHeight * 0.8) {
+            fallElement(target);
         } else {
             console.log('Element is too tall to fall');
         }
