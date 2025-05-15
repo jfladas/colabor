@@ -19,6 +19,12 @@ body {
     background: radial-gradient(circle at center, rgba(250, 200, 0, 0.2) 0%, rgba(250, 200, 0, 0.1) 30%, rgba(0, 0, 0, 0) 50%);
 }
 
+.click {
+    width: 10px;
+    height: 10px;
+    background: blue
+}
+
 select {
     background: #030F17;
     color: white;

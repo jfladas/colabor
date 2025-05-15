@@ -1,35 +1,60 @@
 browser.storage.local.get({ mousePositions: [] }, (result) => {
     const mousePositions = result.mousePositions;
     console.log("Mouse positions:", mousePositions);
-    createSelect(mousePositions);
-    drawHeatmap(mousePositions);
+
+    browser.storage.local.get({ mouseClicks: [] }, (result) => {
+        const mouseClicks = result.mouseClicks;
+        console.log("Mouse clicks:", mouseClicks);
+        createSelects(mousePositions, mouseClicks);
+        drawHeatmap(mousePositions, mouseClicks);
+    });
 })
 
-function createSelect(mousePositions) {
+
+
+function createSelects(mousePositions, mouseClicks) {
     const domains = [...new Set(mousePositions.map(pos => pos.domain))];
 
-    const select = document.createElement('select');
-    select.onchange = function () {
+    const domainSelect = document.createElement('select');
+    domainSelect.onchange = function () {
         updateHeatmap(this.value);
     };
-
-    const defaultOption = document.createElement('option');
-    defaultOption.value = '';
-    defaultOption.textContent = 'All Domains';
-    select.appendChild(defaultOption);
-
+    const defaultDomainOption = document.createElement('option');
+    defaultDomainOption.value = '';
+    defaultDomainOption.textContent = 'All Domains';
+    domainSelect.appendChild(defaultDomainOption);
     domains.forEach(domain => {
         const option = document.createElement('option');
         option.value = domain;
         option.textContent = domain;
-        select.appendChild(option);
+        domainSelect.appendChild(option);
     });
+    const domainControls = document.getElementById('controls') || document.body;
+    domainControls.appendChild(domainSelect);
 
-    const controls = document.getElementById('controls') || document.body;
-    controls.appendChild(select);
+    domainControls.appendChild(document.createElement('br'));
+    domainControls.appendChild(document.createElement('br'));
+
+    const typeSelect = document.createElement('select');
+    typeSelect.onchange = function () {
+        updateHeatmap(this.value);
+    };
+    const typeOptions = [
+        { value: '', text: 'All Types' },
+        { value: 'positions', text: 'Mouse Positions' },
+        { value: 'clicks', text: 'Mouse Clicks' }
+    ];
+    typeOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option.value;
+        opt.textContent = option.text;
+        typeSelect.appendChild(opt);
+    });
+    const typeControls = document.getElementById('controls') || document.body;
+    typeControls.appendChild(typeSelect);
 }
 
-function drawHeatmap(mousePositions) {
+function drawHeatmap(mousePositions, mouseClicks) {
     const positionCounts = {};
     mousePositions.forEach(pos => {
         const key = `${pos.x},${pos.y}`;
@@ -42,8 +67,6 @@ function drawHeatmap(mousePositions) {
             duplicates.push({ x, y, count: positionCounts[key] });
         }
     }
-    console.log("Duplicate positions:", duplicates);
-
     const heatmapContainer = document.getElementById('heatmap');
     mousePositions.forEach(pos => {
         const div = document.createElement('div');
@@ -53,7 +76,6 @@ function drawHeatmap(mousePositions) {
         div.style.top = `${pos.y}px`;
         heatmapContainer.appendChild(div);
     });
-
     duplicates.forEach(pos => {
         const div = document.createElement('div');
         div.className = 'dot lvl' + pos.count;
@@ -62,18 +84,51 @@ function drawHeatmap(mousePositions) {
         div.style.top = `${pos.y}px`;
         heatmapContainer.appendChild(div);
     });
+
+    mouseClicks.forEach(pos => {
+        const div = document.createElement('div');
+        div.className = 'dot click';
+        div.style.position = 'absolute';
+        div.style.left = `${pos.x}px`;
+        div.style.top = `${pos.y}px`;
+        heatmapContainer.appendChild(div);
+    });
 }
 
-function updateHeatmap(domain) {
+function updateHeatmap(domain, type) {
     const heatmapContainer = document.getElementById('heatmap');
     heatmapContainer.innerHTML = '';
 
     browser.storage.local.get({ mousePositions: [] }, (result) => {
-        if (domain === '') {
-            drawHeatmap(result.mousePositions);
-        } else {
-            const mousePositions = result.mousePositions.filter(pos => pos.domain === domain);
-            drawHeatmap(mousePositions);
+        let mousePositions = [];
+        let mouseClicks = [];
+        switch (type) {
+            case 'positions':
+                if (domain === '') {
+                    mousePositions = result.mousePositions;
+                } else {
+                    mousePositions = result.mousePositions.filter(pos => pos.domain === domain);
+                }
+                mouseClicks = [];
+                break;
+            case 'clicks':
+                if (domain === '') {
+                    mouseClicks = result.mouseClicks;
+                } else {
+                    mouseClicks = result.mouseClicks.filter(pos => pos.domain === domain);
+                }
+                break;
+            case '':
+            default:
+                if (domain === '') {
+                    mousePositions = result.mousePositions;
+                    mouseClicks = result.mouseClicks;
+                } else {
+                    mousePositions = result.mousePositions.filter(pos => pos.domain === domain);
+                    mouseClicks = result.mouseClicks.filter(pos => pos.domain === domain);
+                }
+                break;
         }
+        drawHeatmap(mousePositions, mouseClicks);
     });
 }
