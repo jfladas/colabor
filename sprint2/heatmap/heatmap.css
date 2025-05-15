@@ -1,0 +1,28 @@
+body {
+    background: #030F17;
+    overflow: hidden;
+}
+
+.dot {
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 30%, rgba(0, 0, 0, 0) 50%);
+    border-radius: 50%;
+}
+
+.lvl1 {
+    background: radial-gradient(circle at center, rgba(160, 0, 160, 0.2) 0%, rgba(160, 0, 160, 0.1) 30%, rgba(0, 0, 0, 0) 50%);
+}
+
+.lvl2 {
+    background: radial-gradient(circle at center, rgba(250, 200, 0, 0.2) 0%, rgba(250, 200, 0, 0.1) 30%, rgba(0, 0, 0, 0) 50%);
+}
+
+select {
+    background: #030F17;
+    color: white;
+    border: 1px solid #fff;
+    padding: 5px;
+    border-radius: 5px;
+}
