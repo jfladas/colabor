@@ -16,9 +16,6 @@ function createSelects(mousePositions, mouseClicks) {
     const domains = [...new Set(mousePositions.map(pos => pos.domain))];
 
     const domainSelect = document.createElement('select');
-    domainSelect.onchange = function () {
-        updateHeatmap(this.value);
-    };
     const defaultDomainOption = document.createElement('option');
     defaultDomainOption.value = '';
     defaultDomainOption.textContent = 'All Domains';
@@ -29,16 +26,8 @@ function createSelects(mousePositions, mouseClicks) {
         option.textContent = domain;
         domainSelect.appendChild(option);
     });
-    const domainControls = document.getElementById('controls') || document.body;
-    domainControls.appendChild(domainSelect);
-
-    domainControls.appendChild(document.createElement('br'));
-    domainControls.appendChild(document.createElement('br'));
 
     const typeSelect = document.createElement('select');
-    typeSelect.onchange = function () {
-        updateHeatmap(this.value);
-    };
     const typeOptions = [
         { value: '', text: 'All Types' },
         { value: 'positions', text: 'Mouse Positions' },
@@ -50,8 +39,17 @@ function createSelects(mousePositions, mouseClicks) {
         opt.textContent = option.text;
         typeSelect.appendChild(opt);
     });
-    const typeControls = document.getElementById('controls') || document.body;
-    typeControls.appendChild(typeSelect);
+
+    domainSelect.onchange = function () {
+        updateHeatmap(this.value, typeSelect.value);
+    };
+    typeSelect.onchange = function () {
+        updateHeatmap(domainSelect.value, this.value);
+    };
+
+    const controls = document.getElementById('controls');
+    controls.appendChild(domainSelect);
+    controls.appendChild(typeSelect);
 }
 
 function drawHeatmap(mousePositions, mouseClicks) {
@@ -99,36 +97,37 @@ function updateHeatmap(domain, type) {
     const heatmapContainer = document.getElementById('heatmap');
     heatmapContainer.innerHTML = '';
 
-    browser.storage.local.get({ mousePositions: [] }, (result) => {
-        let mousePositions = [];
-        let mouseClicks = [];
-        switch (type) {
-            case 'positions':
-                if (domain === '') {
-                    mousePositions = result.mousePositions;
-                } else {
-                    mousePositions = result.mousePositions.filter(pos => pos.domain === domain);
-                }
-                mouseClicks = [];
-                break;
-            case 'clicks':
-                if (domain === '') {
-                    mouseClicks = result.mouseClicks;
-                } else {
-                    mouseClicks = result.mouseClicks.filter(pos => pos.domain === domain);
-                }
-                break;
-            case '':
-            default:
-                if (domain === '') {
-                    mousePositions = result.mousePositions;
-                    mouseClicks = result.mouseClicks;
-                } else {
-                    mousePositions = result.mousePositions.filter(pos => pos.domain === domain);
-                    mouseClicks = result.mouseClicks.filter(pos => pos.domain === domain);
-                }
-                break;
-        }
-        drawHeatmap(mousePositions, mouseClicks);
+    browser.storage.local.get({ mousePositions: [] }, (respos) => {
+        browser.storage.local.get({ mouseClicks: [] }, (rescli) => {
+            let mousePositions = [];
+            let mouseClicks = [];
+            switch (type) {
+                case 'positions':
+                    if (domain === '') {
+                        mousePositions = respos.mousePositions;
+                    } else {
+                        mousePositions = respos.mousePositions.filter(pos => pos.domain === domain);
+                    }
+                    break;
+                case 'clicks':
+                    if (domain === '') {
+                        mouseClicks = rescli.mouseClicks;
+                    } else {
+                        mouseClicks = rescli.mouseClicks.filter(pos => pos.domain === domain);
+                    }
+                    break;
+                case '':
+                default:
+                    if (domain === '') {
+                        mousePositions = respos.mousePositions;
+                        mouseClicks = rescli.mouseClicks;
+                    } else {
+                        mousePositions = respos.mousePositions.filter(pos => pos.domain === domain);
+                        mouseClicks = rescli.mouseClicks.filter(pos => pos.domain === domain);
+                    }
+                    break;
+            }
+            drawHeatmap(mousePositions, mouseClicks);
+        });
     });
 }
