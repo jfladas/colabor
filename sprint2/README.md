@@ -24,22 +24,22 @@ We explored browser extensions around the theme _Take a Break_, creating multipl
 
 Simulates a “broken” website. Click interactions trigger falling elements, corrupted text, and broken screen overlays. Integrates basic physics using Matter.js to add realistic collision and gravity.
 
-[Firefox](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/break-firefox.zip)
+[Firefox](https://github.com/jfladas/colabor/blob/main/sprint2/downloads/break-firefox.zip)
  | 
-[Chrome](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/break-chrome.zip)
+[Chrome](https://github.com/jfladas/colabor/blob/main/sprint2/downloads/break-chrome.zip)
 
 ## Breathe
 
 Turns any website into a calm breathing exercise. Elements pulse, text morphs into _BREATHE IN_ and _BREATHE OUT_, and the screen edges blur—all synced to a visual rhythm to encourage relaxation.
 
-[Firefox](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/breathe-firefox.zip)
+[Firefox](https://github.com/jfladas/colabor/blob/main/sprint2/downloads/breathe-firefox.zip)
  | 
-[Chrome](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/breathe-chrome.zip)
+[Chrome](https://github.com/jfladas/colabor/blob/main/sprint2/downloads/breathe-chrome.zip)
 
 ## Heatmap
 
 Tracks mouse movements and clicks in real time, visualizing browsing behavior through a heatmap. Users can switch between data types and domains to gain insight into their usage habits.
 
-[Firefox](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/heatmap-firefox.zip)
+[Firefox](https://github.com/jfladas/colabor/blob/main/sprint2/downloads/heatmap-firefox.zip)
  | 
-[Chrome](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/heatmap-chrome.zip)
+[Chrome](https://github.com/jfladas/colabor/blob/main/sprint2/downloads/heatmap-chrome.zip)
