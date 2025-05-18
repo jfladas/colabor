@@ -16,20 +16,8 @@ _Take a Break_
 
 ### Break
 
-[Firefox](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/break-firefox.zip)
-
-[Chrome](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/break-chrome.zip)
-
 #### Breathe
-
-[Firefox](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/breathe-firefox.zip)
-
-[Chrome](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/breathe-chrome.zip)
 
 #### Heatmap
 
-[Firefox](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/heatmap-firefox.zip)
-
-[Chrome](https://github.com/jfladas/colabor/blob/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2/downloads/heatmap-chrome.zip)
-
-### [How do I install the extensions?](https://github.com/jfladas/colabor/tree/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2)
+### [How to install the extensions?](https://github.com/jfladas/colabor/tree/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2)
