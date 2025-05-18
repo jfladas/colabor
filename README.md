@@ -1,6 +1,6 @@
 # +Colabor Creative Coding
 
-## [Sprint 1](https://github.com/jfladas/colabor/tree/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint1)
+## [Sprint 1](https://github.com/jfladas/colabor/tree/main/sprint1)
 
 _Re-Code Re-Think_
 
@@ -10,7 +10,7 @@ _Re-Code Re-Think_
 
 #### [Squares](https://jfladas.github.io/colabor/sprint1/squares/)
 
-## [Sprint 2](https://github.com/jfladas/colabor/tree/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2)
+## [Sprint 2](https://github.com/jfladas/colabor/tree/main/sprint2)
 
 _Take a Break_
 
@@ -20,4 +20,4 @@ _Take a Break_
 
 #### Heatmap
 
-### [How to install the extensions?](https://github.com/jfladas/colabor/tree/e229ba0efd513a3279e27b9ca308a1a490abf877/sprint2)
+### [How to install the extensions?](https://github.com/jfladas/colabor/tree/main/sprint2)
