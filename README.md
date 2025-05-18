@@ -21,3 +21,9 @@ _Take a Break_
 #### Heatmap
 
 ### [How to install the extensions?](https://github.com/jfladas/colabor/tree/main/sprint2)
+
+## HUB
+
+_Kinetic Type_
+
+### [Text to Points](https://jfladas.github.io/colabor/kinetictype/texttopoints/)

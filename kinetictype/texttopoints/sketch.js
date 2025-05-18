@@ -23,13 +23,13 @@ function preload() {
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight, SVG);
-
-    const gui = new dat.GUI();
-    gui.add(params, 'size', 100, 500).name('Text Size').onFinishChange(init);
-    gui.add(params, 'sampleFactor', 0.1, 1).name('Sample Factor').onFinishChange(init);
-    gui.add(params, 'circlesize', 1, 5).name('Circle Size').onFinishChange(init);
-    gui.add(params, 'triggerAction').name("Export SVG");
-
+    /* 
+        const gui = new dat.GUI();
+        gui.add(params, 'size', 100, 500).name('Text Size').onFinishChange(init);
+        gui.add(params, 'sampleFactor', 0.1, 1).name('Sample Factor').onFinishChange(init);
+        gui.add(params, 'circlesize', 1, 5).name('Circle Size').onFinishChange(init);
+        gui.add(params, 'triggerAction').name("Export SVG");
+     */
     init();
 
     frameRate(6);

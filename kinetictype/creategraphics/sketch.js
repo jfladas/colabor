@@ -32,15 +32,15 @@ function setup() {
   pixelDensity(1);
   createCanvas(windowWidth, windowHeight);
   pg = createGraphics(windowWidth / scaleFactor, windowHeight / scaleFactor);
-
-  const gui = new dat.GUI();
-  gui.add(params, 'text').name('Text Input').onFinishChange(init);
-  gui.add(params, 'size', 100, 500).name('Text Size').onFinishChange(init);
-  gui.add(params, 'tilesX', 3, 30).name('Anzahl Spalten');
-  gui.add(params, 'tilesY', 3, 30).name('Anzahl Zeilen');
-  gui.add(params, 'triggerStop').name("Start/Stop");
-  gui.add(params, 'triggerAction').name("Export Image");
-
+  /* 
+    const gui = new dat.GUI();
+    gui.add(params, 'text').name('Text Input').onFinishChange(init);
+    gui.add(params, 'size', 100, 500).name('Text Size').onFinishChange(init);
+    gui.add(params, 'tilesX', 3, 30).name('Anzahl Spalten');
+    gui.add(params, 'tilesY', 3, 30).name('Anzahl Zeilen');
+    gui.add(params, 'triggerStop').name("Start/Stop");
+    gui.add(params, 'triggerAction').name("Export Image");
+   */
   init();
 
   //frameRate(6)
@@ -55,18 +55,19 @@ function draw() {
 
   for (let i = 0; i < params.tilesX; i++) {
     for (let j = 0; j < params.tilesY; j++) {
-      /*
+
       let offsetX = random(-10, 10);
       let offsetY = random(-10, 10);
-      */
 
+      /* 
       let offsetX = sin(i * frameCount / 100) * 10;
       let offsetY = sin(j * frameCount / 100) * 10;
-      copy(pg, i * w, j * h, w, h, i * w + offsetX, j * h + offsetY, w, h);
+      */
+      //copy(pg, i * w, j * h, w, h, i * w + offsetX, j * h + offsetY, w, h);
     }
   }
 
-  //copy(mouseX, mouseY, 100, 100, mouseX + 10, mouseY + 10, 100, 100);
+  copy(mouseX, mouseY, 100, 100, mouseX + 10, mouseY + 10, 100, 100);
 
 }
 
