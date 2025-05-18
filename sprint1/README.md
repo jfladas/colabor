@@ -1,7 +1,8 @@
 # Sprint 1
 
 _Re-Code Re-Think_
-As a starting point, we re-coded Anton Bruhin’s MMVII. Gesundheit, Glück und Geld im Neuen Jahr (2006). The original work features abstract compositions and pixel-based textures. Each of us explored different aspects of the piece, transforming them through code.
+
+As a starting point, we re-coded Anton Bruhin’s _MMVII. Gesundheit, Glück und Geld im Neuen Jahr (2006)._ The original work features abstract compositions and pixel-based textures. Each of us explored different aspects of the piece, transforming them through code.
 
 ## [Pixels](https://jfladas.github.io/colabor/sprint1/pixels/)
 
