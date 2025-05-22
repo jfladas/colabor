@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
             overlay.style.backdropFilter = 'blur(10px)';
         });
         header.addEventListener('mouseleave', () => {
-            overlay.style.backdropFilter = 'blur(0px)';
+            if (window.scrollY <= 10) {
+                overlay.style.backdropFilter = 'blur(0px)';
+            }
         });
     }
 
@@ -26,11 +28,24 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('mousemove', (event) => {
     const title = document.getElementById('title').children[0];
     if (title) {
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
         for (const span of title.children) {
-            const dx = event.clientX - (span.getBoundingClientRect().x + span.offsetWidth / 2);
-            const dy = event.clientY - (span.getBoundingClientRect().y + span.offsetHeight / 2);
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            span.style.fontVariationSettings = `'wdth' ${150 - distance / 20}, 'wght' ${1000 - distance}`;
+            const dx = mouseX - (span.getBoundingClientRect().x + span.offsetWidth / 2);
+            const dy = mouseY - (span.getBoundingClientRect().y + span.offsetHeight / 2);
+            const distance = Math.abs(dx) + Math.abs(dy);
+            span.style.fontVariationSettings = `'wdth' ${150 - distance / 20}, 'wght' ${Math.max(1000 - distance, 200)}`;
+        }
+    }
+});
+
+window.addEventListener('scroll', () => {
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+        if (window.scrollY > 10) {
+            overlay.style.backdropFilter = 'blur(10px)';
+        } else {
+            overlay.style.backdropFilter = 'blur(0px)';
         }
     }
 });
