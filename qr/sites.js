@@ -1,63 +1,63 @@
 export const sites = [
     {
         id: '01cimy',
-        title: 'Cimy'
+        title: 'Talk to me'
     },
     {
         id: '02kxpd',
-        title: 'Kxpd'
+        title: 'Selfie'
     },
     {
         id: '03zses',
-        title: 'Zses'
+        title: `Don't push`
     },
     {
         id: '04hdti',
-        title: 'Qjzv'
+        title: 'Drawn out'
     },
     {
         id: '05xdvb',
-        title: 'Xkqf'
+        title: 'Fluidity'
     },
     {
         id: '06qxoc',
-        title: 'Wztr'
+        title: 'Lens Filter'
     },
     {
         id: '07fqwq',
-        title: 'Yqer'
+        title: 'Object'
     },
     {
         id: '08ymgo',
-        title: 'Vnjm'
+        title: 'Ripples'
     },
     {
         id: '09usaw',
-        title: 'Bqpl'
+        title: 'Shake it'
     },
     {
         id: '10ejzy',
-        title: 'Cxfu'
+        title: '10 Minutes'
     },
     {
         id: '11ktdw',
-        title: 'Dsgw'
+        title: 'Billboard'
     },
     {
         id: '12swor',
-        title: 'Ehty'
+        title: 'Clock'
     },
     {
         id: '13hbem',
-        title: 'Fujk'
+        title: 'Game of Life'
     },
     {
         id: '14xopv',
-        title: 'Gvlm'
+        title: '401 Unauthorized'
     },
     {
         id: '15vrys',
-        title: 'Hwmn'
+        title: 'QR Code'
     },
     {
         id: '16trjr',

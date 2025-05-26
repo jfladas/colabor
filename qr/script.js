@@ -25,8 +25,10 @@ const qr = [
     [1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1]
 ]
-
-localStorage.setItem('qr1', 'done');
+for (let i = 0; i < 16; i++) {
+    //localStorage.setItem(`qr${i + 1}`, 'done');
+    localStorage.removeItem(`qr${i + 1}`);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('container');
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             row.forEach(cell => {
                 const cellDiv = document.createElement('div');
                 cellDiv.className = cell === 0 ? 'cell' : 'cell full';
-                const imgNum = Math.floor(Math.random() * 16) + 1;
+                const imgNum = Math.floor(Math.random() * 15) + 1;
                 const imgPath = `assets/${imgNum.toString().padStart(2, '0')}w.png`;
                 cellDiv.style.backgroundImage = `url('${imgPath}')`;
                 cellDiv.style.backgroundSize = 'cover';
@@ -53,7 +55,7 @@ function animateQRCode() {
     const cells = document.querySelectorAll('.cell');
     cells.forEach((cell, index) => {
         setTimeout(() => {
-            const imgNum = Math.floor(Math.random() * 16) + 1;
+            const imgNum = Math.floor(Math.random() * 15) + 1;
             const imgPath = `assets/${imgNum.toString().padStart(2, '0')}w.png`;
             cell.style.backgroundImage = `url('${imgPath}')`;
         }, index * 100);
