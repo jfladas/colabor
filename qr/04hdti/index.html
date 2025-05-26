@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drawn out</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.5/lib/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+    <script src="sketch.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../overlay.css" />
+  </head>
+  <body>
+    <div id="params">
+      <img
+            src="https://unpkg.com/pixelarticons@1.8.1/svg/arrow-down.svg"
+            id="toggle"
+            onclick="document.getElementById('params').classList.toggle('expanded')"
+          />
+      <div class="param">
+        <p>Pen</p>
+        <ul>
+          <li>
+            <input type="radio" name="pen" id="pen-black" value="0" />
+            <label for="pen-black">
+              <img src="assets/black.png" alt="Black Pen" />
+            </label>
+          </li>
+          <li>
+            <input type="radio" name="pen" id="pen-white" value="1" />
+            <label for="pen-white">
+              <img src="assets/white.png" alt="White Pen" />
+            </label>
+          </li>
+          <li>
+            <input type="radio" name="pen" id="pen-obstruct" value="2" checked />
+            <label for="pen-obstruct">
+              <img src="assets/vertical.png" alt="Obstruct Pen" />
+            </label>
+          </li>
+          <li>
+            <input type="radio" name="pen" id="pen-invert" value="3" />
+            <label for="pen-invert">
+              <img src="assets/invert.png" alt="Invert Pen" />
+            </label>
+          </li>
+          <li>
+            <input type="radio" name="pen" id="pen-reset" value="4" />
+            <label for="pen-reset">
+              <img src="assets/checkered.png" alt="Reset Pen" />
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="param">
+        <p>Background Pattern</p>
+        <ul>
+          <li>
+            <input type="radio" name="pattern" id="horizontal" value="0" checked />
+            <label for="horizontal">
+              <img src="assets/horizontal.png" alt="Horizontal Pattern" />
+            </label>
+          </li>
+          <li>
+            <input type="radio" name="pattern" id="vertical" value="1" />
+            <label for="vertical">
+              <img src="assets/vertical.png" alt="Vertical Pattern" />
+            </label>
+          </li>
+          <li>
+            <input type="radio" name="pattern" id="checkered" value="2" />
+            <label for="checkered">
+              <img src="assets/checkered.png" alt="Checkered Pattern" />
+            </label>
+          </li>
+          <li>
+            <input type="radio" name="pattern" id="black" value="3" />
+            <label for="black">
+              <img src="assets/black.png" alt="Black Pattern" />
+            </label>
+          </li>
+          <li>
+            <input type="radio" name="pattern" id="white" value="4" />
+            <label for="white">
+              <img src="assets/white.png" alt="White Pattern" />
+            </label>
+          </li>
+      </div>
+      <div class="param">
+        <p>Line Width</p>
+        <input type="range" id="width" min="1" max="20" value="10" />
+      </div>
+    </div>
+    <div id="overlay">
+      <h2>#04</h2>
+      <h1>Drawn out</h1>
+    </div>
+  </body>
+</html>

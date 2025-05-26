@@ -19,6 +19,9 @@ body {
 .cell {
     width: 3vh;
     height: 3vh;
+    background-size: cover;
+    background-position: center;
+    image-rendering: auto;
     filter: opacity(0.5)
 }
 
@@ -58,10 +61,26 @@ body {
     }
 
     50% {
-        transform: scale(6);
+        transform: scale(10);
     }
 
     100% {
         transform: scale(1);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #container {
+        margin: calc((100vh - 75vw)/2) auto;
+    }
+
+    .cell {
+        width: 3vw;
+        height: 3vw;
+    }
+
+
+    #overlay {
+        backdrop-filter: contrast(2) blur(2px);
     }
 }

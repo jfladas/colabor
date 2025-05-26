@@ -3,11 +3,7 @@ let pixels = []
 let rows, cols
 let mode
 
-let height = 0.01
-let speed = 0.2
-
-let playing = false
-let played = false
+let pen
 
 function setup() {
     let side = min(windowWidth, windowHeight)
@@ -15,7 +11,6 @@ function setup() {
     canvas.position(0, 0)
     background(200)
     noStroke()
-    frameRate(10)
 
     pixelSize = floor(side / 150)
 
@@ -23,54 +18,80 @@ function setup() {
     cols = ceil(windowWidth / pixelSize)
 
     mode = 'horizontal'
-    step = 0.51
+    pen = 'moire'
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
     resetPixels()
 
-    setTimeout(() => {
-        if (!played) {
-            document.getElementById('msg').style.opacity = 1;
-            setTimeout(() => {
-                if (!played) {
-                    document.getElementById('msg').innerText = 'Thank you!';
-                    localStorage.setItem('qr3', 'done');
-                    setTimeout(() => {
-                        document.getElementById('msg').style.opacity = 0;
-                    }, 3000);
-                }
-            }, 15000);
-        }
-    }, 3000);
+    const patternRadios = document.querySelectorAll('input[name="pattern"]')
+    patternRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            getParams()
+            resetPixels()
+        })
+    })
 }
 
 function draw() {
 
     drawPixels()
-    resetPixels()
+
+    getParams()
 
     if (mouseIsPressed) {
-        if (height > 0) {
-            height -= speed
-            if (height < 0) height = 0
+        localStorage.setItem('qr4', 'done')
+        switch (pen) {
+            case 'black':
+                drawCircle(brushRadius, mouseX / pixelSize, mouseY / pixelSize, 1)
+                break
+            case 'white':
+                drawCircle(brushRadius, mouseX / pixelSize, mouseY / pixelSize, 0)
+                break
+            case 'obstruct':
+                obstructCircle(brushRadius, mouseX / pixelSize, mouseY / pixelSize)
+                break
+            case 'invert':
+                invertCircle(brushRadius, mouseX / pixelSize, mouseY / pixelSize)
+                break
+            case 'reset':
+                resetCircle(brushRadius, mouseX / pixelSize, mouseY / pixelSize)
+                break
         }
-    } else {
-        if (height < 1) {
-            height += speed
-            if (height > 1) height = 1
-        }
+    }
+}
+
+function getParams() {
+    if (document.getElementById('pen-black')?.checked) {
+        pen = 'black'
+    } else if (document.getElementById('pen-white')?.checked) {
+        pen = 'white'
+    } else if (document.getElementById('pen-obstruct')?.checked) {
+        pen = 'obstruct'
+    } else if (document.getElementById('pen-invert')?.checked) {
+        pen = 'invert'
+    } else if (document.getElementById('pen-reset')?.checked) {
+        pen = 'reset'
     }
 
-    if (height < 0.01) {
-        height = 0
-        try {
-            playSound();
-        } catch (e) {
-            console.error('Error playing sound:', e);
-        }
+    if (document.getElementById('horizontal')?.checked) {
+        mode = 'horizontal'
+    } else if (document.getElementById('vertical')?.checked) {
+        mode = 'vertical'
+    } else if (document.getElementById('checkered')?.checked) {
+        mode = 'checkered'
+    } else if (document.getElementById('black')?.checked) {
+        mode = 'black'
+    } else if (document.getElementById('white')?.checked) {
+        mode = 'white'
     }
-    raisedCircle(60, ceil(cols / 2), ceil(rows / 2) + 5, height)
+
+    let widthInput = document.getElementById('width')
+    if (widthInput) {
+        brushRadius = parseInt(widthInput.value, 10)
+    } else {
+        brushRadius = 5
+    }
 }
 
 function drawPixels() {
@@ -158,6 +179,16 @@ function resetPixels() {
                 }
             }
             break
+    }
+}
+
+function drawCircle(radius, x, y, color) {
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            if (distSq(i, j, x, y) < radius ** 2) {
+                pixels[j][i] = color
+            }
+        }
     }
 }
 
@@ -254,30 +285,7 @@ function resetCircle(radius, x, y) {
     }
 }
 
-function raisedCircle(radius, x, y, height = 1) {
-    obstructCircle(radius, x, y)
-    resetCircle(radius, x, y - ceil(radius / 3 * height))
-    if (height != 0) {
-        invertCircle(radius, x, y - ceil(radius / 3 * height))
-    } else {
-        resetCircle(radius + 1, x, y)
-    }
-}
 
 function distSq(x1, y1, x2, y2) {
     return (x1 - x2) ** 2 + (y1 - y2) ** 2;
-}
-
-function playSound() {
-    if (playing) return;
-    playing = true;
-    played = true;
-    document.getElementById('msg').style.opacity = 0;
-    localStorage.setItem('qr3', '');
-    let audio = new Audio('alarm.wav');
-    audio.play();
-    audio.onended = () => {
-        playing = false;
-        location.reload();
-    };
 }

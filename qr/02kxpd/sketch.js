@@ -3,9 +3,6 @@ let pixels = []
 let rows, cols
 let mode
 
-let height = 0.01
-let speed = 0.1
-
 let video
 let vidPixels = []
 

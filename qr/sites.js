@@ -57,7 +57,7 @@ export const sites = [
     },
     {
         id: '15vrys',
-        title: 'QR Code'
+        title: 'QR'
     },
     {
         id: '16trjr',
