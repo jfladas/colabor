@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (header && overlay) {
         header.addEventListener('mouseenter', () => {
-            overlay.style.backdropFilter = 'blur(10px)';
+            overlay.style.opacity = '1';
         });
         header.addEventListener('mouseleave', () => {
             if (window.scrollY <= 10) {
-                overlay.style.backdropFilter = 'blur(0px)';
+                overlay.style.opacity = '0';
             }
         });
     }
@@ -43,9 +43,9 @@ window.addEventListener('scroll', () => {
     const overlay = document.getElementById('overlay');
     if (overlay) {
         if (window.scrollY > 10) {
-            overlay.style.backdropFilter = 'blur(10px)';
+            overlay.style.opacity = '1';
         } else {
-            overlay.style.backdropFilter = 'blur(0px)';
+            overlay.style.opacity = '0';
         }
     }
 });

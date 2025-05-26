@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght@8..144,-10..0,25..151,100..1000&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Roboto Flex', sans-serif;
+    font-variation-settings:
+        'wdth' 120,
+        'wght' 400;
+}
+
+#container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .field {
+        width: 25vw;
+        height: 25vh;
+        background-color: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: default;
+        text-decoration: none;
+        color: #fff;
+        text-align: center;
+
+        h1 {
+            font-variation-settings:
+                'wdth' 120,
+                'wght' 400;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .icon {
+            width: 2rem !important;
+            height: 2rem !important;
+            filter: invert(1);
+        }
+    }
+
+    .field:hover {
+        h1 {
+            font-variation-settings:
+                'wdth' 150,
+                'wght' 1000;
+        }
+    }
+
+    .done {
+        background-color: #fff;
+        cursor: pointer;
+        color: #000;
+
+        h1 {
+            font-variation-settings:
+                'wdth' 120,
+                'wght' 400;
+            transition: all 0.3s ease-in-out;
+            margin: 1rem 0;
+        }
+
+        h2 {
+            font-variation-settings:
+                'wdth' 120,
+                'wght' 400;
+            margin: 0;
+        }
+
+        .icon {
+            filter: invert(0);
+        }
+    }
+
+    .done:hover {
+
+        h1 {
+            font-variation-settings:
+                'wdth' 150,
+                'wght' 1000;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #container {
+        .field {
+            width: 50vw;
+            height: 12.5vh;
+
+            h1 {
+                font-size: 1.5rem;
+                font-variation-settings:
+                    'wdth' 150,
+                    'wght' 1000;
+                margin: 0.2rem 0;
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
+
+            .icon {
+                width: 1.5rem !important;
+                height: 1.5rem !important;
+            }
+        }
+    }
+
+}

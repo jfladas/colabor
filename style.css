@@ -43,7 +43,8 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(0px);
+    backdrop-filter: blur(10px);
+    opacity: 0;
     z-index: -1;
     transition: all 0.3s ease-in-out;
 }
@@ -209,7 +210,7 @@ header {
         .gallery-item {
             position: relative;
             display: inline-block;
-            cursor: pointer;
+            background-color: #000;
         }
 
         .gallery-overlay {
