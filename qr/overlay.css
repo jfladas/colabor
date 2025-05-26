@@ -8,6 +8,7 @@ body {
     font-variation-settings:
         'wdth' 120,
         'wght' 400;
+    user-select: none;
 }
 
 #overlay {
