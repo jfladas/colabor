@@ -90,10 +90,15 @@ body {
 }
 
 @media screen and (max-width: 800px) {
+    body {
+        overflow: auto;
+    }
+
     #container {
         .field {
             width: 50vw;
-            height: 12.5vh;
+            height: 20vh;
+            min-height: 5rem;
 
             h1 {
                 font-size: 1.2rem;
