@@ -35,41 +35,31 @@ function setup() {
     amplitude = new p5.Amplitude();
     micPromptTimer = millis();
     micPromptShown = false;
+
+    startButton = createButton('Start Microphone');
+    startButton.mousePressed(startMic);
+    startButton.style('position', 'absolute');
+    startButton.style('top', '0');
+    startButton.style('left', '0');
+    startButton.style('width', '100%');
+    startButton.style('height', '100%');
+    startButton.style('opacity', '0');
+    startButton.style.zIndex = 9999;
 }
 
-function mousePressed() {
+function startMic() {
     if (getAudioContext().state !== 'running') {
         getAudioContext().resume();
     }
     if (!micStarted) {
-        mic.start(
-            () => {
-                amplitude.setInput(mic);
-                micStarted = true;
-                micPromptShown = false;
-                document.getElementById('msg').style.opacity = 0;
-                localStorage.setItem('qr1', 'done');
-            }
-        );
+        mic.start(() => {
+            amplitude.setInput(mic);
+            micStarted = true;
+            micPromptShown = false;
+            document.getElementById('msg').style.opacity = 0;
+            localStorage.setItem('qr1', 'done');
+        });
     }
-}
-
-function touchStarted() {
-    if (getAudioContext().state !== 'running') {
-        getAudioContext().resume();
-    }
-    if (!micStarted) {
-        mic.start(
-            () => {
-                amplitude.setInput(mic);
-                micStarted = true;
-                micPromptShown = false;
-                document.getElementById('msg').style.opacity = 0;
-                localStorage.setItem('qr1', 'done');
-            }
-        );
-    }
-    return false;
 }
 
 function draw() {
