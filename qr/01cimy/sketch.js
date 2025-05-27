@@ -60,7 +60,11 @@ function draw() {
         micLevel = amplitude.getLevel();
         let minRadius = 20;
         let maxRadius = 120;
-        targetRadius = map(micLevel, 0, 0.2, minRadius, maxRadius);
+        if (pixelSize < 5) {
+            targetRadius = map(micLevel, 0, 0.1, minRadius, maxRadius);
+        } else {
+            targetRadius = map(micLevel, 0, 0.2, minRadius, maxRadius);
+        }
         targetRadius = constrain(targetRadius, minRadius, maxRadius);
     } else {
         targetRadius = 60;
