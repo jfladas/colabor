@@ -25,7 +25,8 @@ function setup() {
     let constraints = {
         video: {
             facingMode: { exact: "environment" }
-        }
+        },
+        audio: false
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
@@ -37,7 +38,7 @@ function setup() {
         })
         .catch(function (err) {
             isRearCamera = false
-            video = createCapture(VIDEO);
+            video = createCapture({ video: true, audio: false });
             video.size(cols, rows)
             video.hide()
         });
@@ -90,20 +91,20 @@ function ditherVideo() {
             let brightness = (video.pixels[index] + video.pixels[index + 1] + video.pixels[index + 2]) / 3
             if (brightness < 50) {
                 pixels[j][i] = 1
-            } else if (brightness < 100) {
+            } else if (brightness < 80) {
                 if (i % 2 == 0 && j % 2 == 0) {
-                    pixels[j][i] = 1
-                } else {
                     pixels[j][i] = 0
+                } else {
+                    pixels[j][i] = 1
                 }
-            } else if (brightness < 150) {
-                if (i % 2 == 1 && j % 2 == 1) {
+            } else if (brightness < 120) {
+                if ((i + j) % 2 == 0) {
                     pixels[j][i] = 1
                 } else {
                     pixels[j][i] = 0
                 }
             } else if (brightness < 200) {
-                if ((i + j) % 2 == 0) {
+                if (i % 2 == 0 && j % 2 == 0) {
                     pixels[j][i] = 1
                 } else {
                     pixels[j][i] = 0
