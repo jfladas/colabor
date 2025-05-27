@@ -43,6 +43,15 @@ const rightWall = Bodies.rectangle(
 );
 World.add(world, rightWall);
 
+const ceiling = Bodies.rectangle(
+    window.innerWidth / 2,
+    -wallThickness / 2,
+    window.innerWidth + wallThickness * 2,
+    wallThickness,
+    { isStatic: true }
+);
+World.add(world, ceiling);
+
 function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -62,6 +71,12 @@ function setup() {
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
     resetPixels()
+
+    if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock("portrait").catch(function (err) {
+            console.error("Orientation lock failed: ", err);
+        });
+    }
 
     setTimeout(() => {
         if (!shown) {
