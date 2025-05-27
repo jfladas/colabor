@@ -60,7 +60,7 @@ function setup() {
     noStroke()
     frameRate(10)
 
-    pixelSize = floor(side / 50)
+    pixelSize = floor(side / 100)
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
@@ -81,8 +81,8 @@ function setup() {
     setTimeout(() => {
         if (!shown) {
             document.getElementById('msg').style.opacity = 1;
+            shown = true;
         }
-        shown = true;
     }, 3000);
 }
 
@@ -96,10 +96,10 @@ function draw() {
     removeOffscreenCircles()
 
     if (mouseIsPressed) {
-        localStorage.setItem('qr5', 'done')
+        localStorage.setItem('qr7', 'done')
         document.getElementById('msg').style.opacity = 0;
         shown = true;
-        addLiquid()
+        addBalls()
     }
 }
 
@@ -123,6 +123,17 @@ if (window.DeviceOrientationEvent) {
 } else if (window.DeviceMotionEvent) {
     window.addEventListener('devicemotion', handleMotion, true);
 }
+
+window.addEventListener('orientationchange', () => {
+    if (!shown) {
+        document.getElementById('msg').innerText = 'You might need to lock your screen orientation to portrait mode';
+        document.getElementById('msg').style.opacity = 1;
+        shown = true;
+        setTimeout(() => {
+            document.getElementById('msg').style.opacity = 0;
+        }, 3000);
+    }
+});
 
 function drawPixels() {
     clear()
@@ -170,20 +181,16 @@ function distSq(x1, y1, x2, y2) {
     return (x1 - x2) ** 2 + (y1 - y2) ** 2;
 }
 
-function addLiquid() {
-    const radius = pixelSize;
+function addBalls() {
+    const radius = pixelSize * 5;
     const x = mouseX;
     const y = mouseY;
-    for (let i = 0; i < 10; i++) {
-        const angle = (i / 5) * Math.PI * 2;
-        const offsetY = Math.sin(angle) * radius / 2;
-        const c = Bodies.circle(x, y + offsetY, radius, {
-            restitution: 0.8,
-            friction: 0,
-            density: 1,
-        });
-        World.add(world, c);
-    }
+    const c = Bodies.circle(x, y, radius + (Math.random() - 0.5) * radius, {
+        restitution: 1,
+        friction: 0,
+        density: 1,
+    });
+    World.add(world, c);
 }
 
 function pixellateMatter() {

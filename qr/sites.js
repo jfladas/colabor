@@ -25,7 +25,7 @@ export const sites = [
     },
     {
         id: '07fqwq',
-        title: 'Object'
+        title: 'Ball Pit'
     },
     {
         id: '08ymgo',
