@@ -142,6 +142,7 @@ function resetPixels() {
 }
 
 function obstructVideo() {
+    if (!video) return;
     video.loadPixels();
     if (video.elt.readyState !== 4) {
         return;
