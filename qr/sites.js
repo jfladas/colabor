@@ -21,7 +21,7 @@ export const sites = [
     },
     {
         id: '06qxoc',
-        title: 'Through my lens',
+        title: 'Lens Filter',
     },
     {
         id: '07fqwq',
