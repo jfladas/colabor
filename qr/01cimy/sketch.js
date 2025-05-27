@@ -55,7 +55,20 @@ function mousePressed() {
 }
 
 function touchStarted() {
-    mousePressed();
+    if (getAudioContext().state !== 'running') {
+        getAudioContext().resume();
+    }
+    if (!micStarted) {
+        mic.start(
+            () => {
+                amplitude.setInput(mic);
+                micStarted = true;
+                micPromptShown = false;
+                document.getElementById('msg').style.opacity = 0;
+                localStorage.setItem('qr1', 'done');
+            }
+        );
+    }
     return false;
 }
 
@@ -87,7 +100,8 @@ function draw() {
     step += 0.005 * dir;
 
     if (micPromptShown && !micStarted) {
-        document.getElementById('msg').style.opacity = 1;
+        const msgElem = document.getElementById('msg');
+        if (msgElem) msgElem.style.opacity = 1;
     }
 }
 
