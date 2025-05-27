@@ -31,18 +31,18 @@ function setup() {
             facingMode: { exact: "environment" }
         }
     };
-    video = createCapture(constraints, function (stream) {
-        if (!stream) {
+
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(function (stream) {
+            video = createCapture(constraints);
+            video.size(cols, rows)
+            video.hide()
+        })
+        .catch(function (err) {
             video = createCapture(VIDEO);
-        }
-        video.size(cols, rows)
-        video.hide()
-    });
-    video.on('error', () => {
-        video = createCapture(VIDEO);
-        video.size(cols, rows)
-        video.hide()
-    });
+            video.size(cols, rows)
+            video.hide()
+        });
 }
 
 function draw() {
