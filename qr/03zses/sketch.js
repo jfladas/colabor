@@ -9,6 +9,8 @@ let speed = 0.2
 let playing = false
 let played = false
 
+const msg = document.getElementById('msg');
+
 function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -31,13 +33,13 @@ function setup() {
 
     setTimeout(() => {
         if (!played) {
-            document.getElementById('msg').style.opacity = 1;
+            msg.style.opacity = 1;
             setTimeout(() => {
                 if (!played) {
-                    document.getElementById('msg').innerText = 'Thank you!';
+                    msg.innerText = 'Thank you!';
                     localStorage.setItem('qr3', 'done');
                     setTimeout(() => {
-                        document.getElementById('msg').style.opacity = 0;
+                        msg.style.opacity = 0;
                     }, 3000);
                 }
             }, 15000);
@@ -65,7 +67,7 @@ function draw() {
     if (height < 0.01) {
         height = 0
         try {
-            playSound();
+            triggerAlarm();
         } catch (e) {
             console.error('Error playing sound:', e);
         }
@@ -268,11 +270,11 @@ function distSq(x1, y1, x2, y2) {
     return (x1 - x2) ** 2 + (y1 - y2) ** 2;
 }
 
-function playSound() {
+function triggerAlarm() {
     if (playing) return;
     playing = true;
     played = true;
-    document.getElementById('msg').style.opacity = 0;
+    msg.style.opacity = 0;
     localStorage.setItem('qr3', '');
     let audio = new Audio('alarm.wav');
     audio.play();
@@ -280,4 +282,19 @@ function playSound() {
         playing = false;
         location.reload();
     };
+
+    msg.innerText = 'Alarm triggered!';
+    msg.style.opacity = 1;
+
+    const flash = document.getElementById('flash');
+    flash.innerHTML = '';
+    flash.style.opacity = 1;
+    setInterval(() => {
+        if (flash.style.backgroundColor === 'white') {
+            flash.style.backgroundColor = 'black';
+        } else {
+            flash.style.backgroundColor = 'white';
+        }
+    }, 500);
+
 }
