@@ -58,5 +58,5 @@ function animateQRCode() {
             cell.style.backgroundImage = `url('${imgPath}')`;
         }, index * 100);
     });
-    setTimeout(animateQRCode, Math.random() * 5000);
+    setTimeout(animateQRCode, Math.random() * 3000);
 }
