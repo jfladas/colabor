@@ -36,15 +36,7 @@ function setup() {
     micPromptTimer = millis();
     micPromptShown = false;
 
-    startButton = createButton('Start Microphone');
-    startButton.mousePressed(startMic);
-    startButton.style('position', 'absolute');
-    startButton.style('top', '0');
-    startButton.style('left', '0');
-    startButton.style('width', '100%');
-    startButton.style('height', '100%');
-    startButton.style('opacity', '0');
-    startButton.style.zIndex = 9999;
+    canvas.mousePressed(startMic);
 }
 
 function startMic() {
