@@ -3,6 +3,8 @@ let pixels = []
 let rows, cols
 let mode
 
+let shown = false
+
 if (typeof Matter === 'undefined') {
     console.error('Matter.js is not defined');
 }
@@ -60,6 +62,13 @@ function setup() {
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
     resetPixels()
+
+    setTimeout(() => {
+        if (!shown) {
+            document.getElementById('msg').style.opacity = 1;
+        }
+        shown = true;
+    }, 3000);
 }
 
 function draw() {
@@ -73,6 +82,8 @@ function draw() {
 
     if (mouseIsPressed) {
         localStorage.setItem('qr5', 'done')
+        document.getElementById('msg').style.opacity = 0;
+        shown = true;
         addLiquid()
     }
 }
