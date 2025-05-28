@@ -14,6 +14,8 @@ let lastAccel = { x: 0, y: 0, z: 0 }
 let accelShake = false
 
 let shakeIntensity = 0
+let lastAccelMag = 0
+let accelIntensity = 0
 
 function setup() {
     let side = min(windowWidth, windowHeight)
@@ -53,10 +55,12 @@ function setup() {
         window.addEventListener('devicemotion', function (event) {
             let acc = event.accelerationIncludingGravity
             if (acc) {
-                let dx = Math.abs(acc.x - lastAccel.x)
-                let dy = Math.abs(acc.y - lastAccel.y)
-                let dz = Math.abs(acc.z - lastAccel.z)
-                accelShake = (dx + dy + dz) > 3
+                let dx = acc.x - lastAccel.x
+                let dy = acc.y - lastAccel.y
+                let dz = acc.z - lastAccel.z
+                let mag = Math.sqrt(dx * dx + dy * dy + dz * dz)
+                accelIntensity = constrain(mag / 10, 0, 1)
+                accelShake = mag > 3
                 lastAccel.x = acc.x
                 lastAccel.y = acc.y
                 lastAccel.z = acc.z
@@ -118,13 +122,11 @@ function detectShake() {
     let dx = abs(mouseX - lastMouseX)
     let dy = abs(mouseY - lastMouseY)
     let mouseDelta = dx + dy
-    let mouseShake = mouseDelta > shakeThreshold
+    let mouseIntensity = constrain(mouseDelta / (2 * shakeThreshold), 0, 1)
     lastMouseX = mouseX
     lastMouseY = mouseY
 
-    let accelDelta = accelShake ? 1 : 0
-
-    shakeIntensity = min(1, max(mouseDelta / (2 * shakeThreshold), accelDelta))
+    shakeIntensity = max(mouseIntensity, accelIntensity)
     isShaking = shakeIntensity > 0
 
     if (shakeIntensity > 0.8) {
