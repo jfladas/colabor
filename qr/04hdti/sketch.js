@@ -1,3 +1,5 @@
+localStorage.setItem('qr4', 'found');
+
 let pixelSize
 let pixels = []
 let rows, cols

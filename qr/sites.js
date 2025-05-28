@@ -33,7 +33,7 @@ export const sites = [
     },
     {
         id: '09usaw',
-        title: 'Shake it'
+        title: 'Shaken up'
     },
     {
         id: '10ejzy',

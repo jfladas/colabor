@@ -37,12 +37,14 @@ body {
                 'wdth' 120,
                 'wght' 400;
             transition: all 0.3s ease-in-out;
+            margin: -0.5rem 0 0.5rem 0;
         }
 
         .icon {
             width: 2rem !important;
             height: 2rem !important;
             filter: invert(1);
+            transition: all 0.3s ease-in-out;
         }
     }
 
@@ -54,24 +56,16 @@ body {
         }
     }
 
-    .done {
+    .done,
+    .found {
         background-color: #fff;
         cursor: pointer;
         color: #000;
-
-        h1 {
-            font-variation-settings:
-                'wdth' 120,
-                'wght' 400;
-            transition: all 0.3s ease-in-out;
-            margin: 1rem 0;
-        }
 
         h2 {
             font-variation-settings:
                 'wdth' 120,
                 'wght' 400;
-            margin: 0;
         }
 
         .icon {
@@ -79,12 +73,9 @@ body {
         }
     }
 
-    .done:hover {
-
-        h1 {
-            font-variation-settings:
-                'wdth' 150,
-                'wght' 1000;
+    .found:hover {
+        .icon {
+            transform: scale(1.2);
         }
     }
 }
@@ -104,8 +95,8 @@ body {
                 font-size: 1.2rem;
                 font-variation-settings:
                     'wdth' 150,
-                    'wght' 1000;
-                margin: 0.2rem 0;
+                    'wght' 800;
+                margin: 0 0 0.5rem 0;
             }
 
             h2 {

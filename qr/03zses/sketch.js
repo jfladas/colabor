@@ -1,3 +1,5 @@
+localStorage.setItem('qr3', 'found');
+
 let pixelSize
 let pixels = []
 let rows, cols
@@ -275,7 +277,7 @@ function triggerAlarm() {
     playing = true;
     played = true;
     msg.style.opacity = 0;
-    localStorage.setItem('qr3', '');
+    localStorage.setItem('qr3', 'found');
     let audio = new Audio('alarm.wav');
     audio.play();
     audio.onended = () => {

@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="https://unpkg.com/pixelarticons@1.8.1/svg/check.svg" class="icon" />
                 `;
                 a.href = `/qr/${sites[i - 1].id}`;
+            } else if (qr === 'found') {
+                a.className = 'found field';
+                a.innerHTML = `
+                    <h2>#${num}</h2>
+                    <img src="https://unpkg.com/pixelarticons@1.8.1/svg/lock-open.svg" class="icon" />
+                `;
+                a.href = `/qr/${sites[i - 1].id}`;
             } else {
                 a.className = 'field';
                 a.innerHTML = `
