@@ -1,5 +1,6 @@
-localStorage.setItem('qr8', 'found');
-
+if (localStorage.getItem('qr8') !== 'done') {
+    localStorage.setItem('qr8', 'found');
+}
 let pixelSize
 let pixels = []
 let rows, cols
