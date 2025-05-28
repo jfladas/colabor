@@ -15,7 +15,7 @@ function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
-    background(200)
+    background(255)
     noStroke()
     frameRate(10)
 
@@ -37,7 +37,7 @@ function setup() {
 }
 
 function draw() {
-    background(200);
+    background(255);
 
     if (!timerEnded) {
         let now = floor(millis() / 1000);
@@ -100,7 +100,7 @@ function drawPixels() {
             if (pixels[i][j]) {
                 fill(0);
             } else {
-                fill(200);
+                fill(255);
             }
             rect(j * pixelSize, i * pixelSize, pixelSize, pixelSize);
         }

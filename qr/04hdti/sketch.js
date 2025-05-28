@@ -11,7 +11,7 @@ function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
-    background(200)
+    background(255)
     noStroke()
 
     pixelSize = floor(side / 150)
