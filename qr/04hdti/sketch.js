@@ -207,7 +207,11 @@ function obstructCircle(radius, x, y) {
         for (let i = 0; i < cols; i++) {
             for (let j = 0; j < rows; j++) {
                 if (distSq(i, j, x, y) <= radius ** 2) {
-                    pixels[j][i] = pixels[j][i - 1]
+                    if (i - 1 >= 0) {
+                        pixels[j][i] = pixels[j][i - 1]
+                    } else {
+                        pixels[j][i] = Math.random() < 0.5 ? 0 : 1
+                    }
                 }
             }
         }
