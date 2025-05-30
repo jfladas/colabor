@@ -23,7 +23,6 @@ function setup() {
     cols = ceil(windowWidth / pixelSize)
 
     mode = 'checkered'
-
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
     vidPixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
@@ -32,6 +31,15 @@ function setup() {
     video = createCapture(VIDEO)
     video.size(cols, rows)
     video.hide()
+
+    const btn = document.getElementById('download-btn');
+    if (btn) {
+        btn.addEventListener('click', () => {
+            localStorage.setItem('qr2', 'done');
+            saveCanvas('selfie', 'png');
+            resetPixels();
+        });
+    }
 }
 
 function draw() {
@@ -48,6 +56,9 @@ function drawPixels() {
         for (let j = 0; j < rows; j++) {
             if (pixels[j][i] != 0) {
                 fill(0)
+                square(i * pixelSize, j * pixelSize, pixelSize)
+            } else {
+                fill(255)
                 square(i * pixelSize, j * pixelSize, pixelSize)
             }
         }
@@ -135,7 +146,6 @@ function obstructVideo() {
     if (video.elt.readyState !== 4) {
         return;
     }
-    localStorage.setItem('qr2', 'done');
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             let index = (j * video.width + i) * 4

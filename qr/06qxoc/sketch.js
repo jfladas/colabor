@@ -45,6 +45,15 @@ function setup() {
             video.size(cols, rows)
             video.hide()
         });
+
+    const btn = document.getElementById('download-btn');
+    if (btn) {
+        btn.addEventListener('click', () => {
+            localStorage.setItem('qr6', 'done');
+            saveCanvas('lens-filter', 'png');
+            resetPixels();
+        });
+    }
 }
 
 function draw() {
@@ -62,6 +71,9 @@ function drawPixels() {
             if (pixels[j][i] != 0) {
                 fill(0)
                 square(i * pixelSize, j * pixelSize, pixelSize)
+            } else {
+                fill(255)
+                square(i * pixelSize, j * pixelSize, pixelSize)
             }
         }
     }
@@ -70,7 +82,7 @@ function drawPixels() {
 function resetPixels() {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
-            pixels[i][j] = 1
+            pixels[i][j] = 0
         }
     }
 }
@@ -81,7 +93,6 @@ function ditherVideo() {
     if (video.elt.readyState !== 4) {
         return;
     }
-    localStorage.setItem('qr6', 'done');
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             let index;

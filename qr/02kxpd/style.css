@@ -1,0 +1,19 @@
+#download-btn {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 5rem;
+    height: 5rem;
+    background-color: #fff;
+    filter: invert(1);
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
