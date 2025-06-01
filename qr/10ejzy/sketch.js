@@ -11,6 +11,26 @@ let shown = false
 let countdownSeconds = 10 * 60;
 let lastSecond = 0;
 let timerEnded = false;
+let first = true;
+
+let messages = [
+    { txt: "Wait for 10 minutes", delay: 3000 },
+    { txt: "Or don't", delay: 10000 },
+    { txt: "I don't care", delay: 20000 },
+    { txt: "Maybe I do care...", delay: 60000 },
+    { txt: "Do you care?", delay: 120000 },
+    { txt: "What do you care about?", delay: 180000 },
+    { txt: "About satisfaction? Entertainment? Closure? Meaning?", delay: 210000 },
+    { txt: "What if you get none of that?", delay: 270000 },
+    { txt: "What if you get nothing?", delay: 300000 },
+    { txt: "Will you be disappointed?", delay: 370000 },
+    { txt: "Disappointed in yourself?", delay: 400000 },
+    { txt: "Disappointed in me?", delay: 430000 },
+    { txt: "Should I care?", delay: 490000 },
+    { txt: "What do I care about?", delay: 540000 },
+    { txt: "I care about you", delay: 590000 },
+];
+let msg
 
 function setup() {
     let side = min(windowWidth, windowHeight)
@@ -29,17 +49,22 @@ function setup() {
 
     resetPixels()
 
-    setTimeout(() => {
-        if (!shown) {
-            document.getElementById('msg').style.opacity = 1;
-            shown = true;
-        }
-    }, 3000);
+    msg = document.getElementById('msg');
+
+    for (let m = 0; m < messages.length; m++) {
+        setTimeout(() => {
+            if (m !== 12 && m !== 13) {
+                msg.innerText = messages[m].txt;
+                msg.style.opacity = 1;
+                setTimeout(() => {
+                    msg.style.opacity = 0;
+                }, 3000);
+            }
+        }, messages[m].delay);
+    }
 }
 
 function draw() {
-    background(255);
-
     if (!timerEnded) {
         let now = floor(millis() / 1000);
         if (now !== lastSecond) {
@@ -52,15 +77,17 @@ function draw() {
         }
         drawCountdownPixellated(countdownSeconds);
     } else {
-        document.getElementById('msg').innerText = "Well done!";
-        localStorage.setItem('qr10', 'done');
-        resetPixels();
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < cols; j++) {
-                pixels[i][j] = 1;
-            }
+        if (first) {
+            first = false;
+            msg.innerText = `I didn't expect you to stay...
+            Thank you.`;
+            msg.style.opacity = 1;
+            localStorage.setItem('qr10', 'done');
+            resetPixels();
+            makeConfetti();
+        } else {
+            drawPixels();
         }
-        drawPixels();
     }
 }
 
@@ -95,6 +122,32 @@ function drawCountdownPixellated(secondsLeft) {
     drawPixels();
 }
 
+function makeConfetti() {
+    let size = random(1, 3);
+    let x = random(cols);
+    let y = 0;
+    let lastx, lasty;
+    let fall = setInterval(() => {
+        if (y > rows - size) {
+            clearInterval(fall);
+            return;
+        }
+        invertRect(x, y, x + size, y + size);
+        if (lastx !== undefined && lasty !== undefined) {
+            invertRect(lastx, lasty, lastx + size, lasty + size);
+        }
+        lastx = x;
+        lasty = y;
+        y += 0.5;
+        if (random() < 0.5) {
+            x += random(-1, 1);
+        }
+    }, 30);
+    setTimeout(() => {
+        makeConfetti();
+    }, random(100));
+}
+
 function drawPixels() {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
@@ -112,6 +165,36 @@ function resetPixels() {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             pixels[i][j] = 0
+        }
+    }
+}
+
+function invertRect(startX, startY, endX, endY) {
+    if (startX > endX) {
+        let temp = startX
+        startX = endX
+        endX = temp
+    }
+    if (startY > endY) {
+        let temp = startY
+        startY = endY
+        endY = temp
+    }
+    if (endX > cols) {
+        endX = cols
+    }
+    if (endY > rows) {
+        endY = rows
+    }
+
+    startX = floor(startX);
+    startY = floor(startY);
+    endX = floor(endX);
+    endY = floor(endY);
+
+    for (let i = startX; i < endX; i++) {
+        for (let j = startY; j < endY; j++) {
+            pixels[j][i] = 1 - pixels[j][i];
         }
     }
 }

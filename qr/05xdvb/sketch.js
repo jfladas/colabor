@@ -159,7 +159,7 @@ function pixellateMatter() {
             let px = (i + 0.5) * pixelSize;
             let py = (j + 0.5) * pixelSize;
             for (let body of world.bodies) {
-                if (body === ground) continue;
+                if (body === ground || body === leftWall || body === rightWall) continue;
                 if (body.circleRadius) {
                     let dx = px - body.position.x;
                     let dy = py - body.position.y;
