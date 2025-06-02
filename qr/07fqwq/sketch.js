@@ -130,7 +130,7 @@ if (window.DeviceOrientationEvent) {
 
 window.addEventListener('orientationchange', () => {
     if (!shown2) {
-        document.getElementById('msg').innerText = 'You might need to lock your screen orientation to portrait mode';
+        document.getElementById('msg').innerText = 'You might want to lock your screen orientation to portrait mode';
         document.getElementById('msg').style.opacity = 1;
         shown2 = true;
         setTimeout(() => {

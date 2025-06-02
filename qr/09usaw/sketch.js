@@ -62,7 +62,7 @@ function setup() {
                 let dy = acc.y - lastAccel.y
                 let dz = acc.z - lastAccel.z
                 let mag = Math.sqrt(dx * dx + dy * dy + dz * dz)
-                accelIntensity = constrain(mag / 10, 0, 1)
+                accelIntensity = constrain(mag / 20, 0, 1)
                 accelShake = mag > 3
                 lastAccel.x = acc.x
                 lastAccel.y = acc.y

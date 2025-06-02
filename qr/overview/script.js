@@ -2,8 +2,6 @@ import { sites } from '../sites.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    localStorage.setItem('qr16', 'done');
-
     const container = document.getElementById('container');
     if (container) {
         for (let i = 1; i <= 16; i++) {

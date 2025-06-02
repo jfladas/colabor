@@ -57,10 +57,10 @@ export const sites = [
     },
     {
         id: '15vrys',
-        title: 'QR'
+        title: 'Scroll'
     },
     {
         id: '16trjr',
-        title: 'Progress'
+        title: 'All at once'
     }
 ];

@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght@8..144,-10..0,25..151,100..1000&display=swap');
 
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+* {
     font-family: 'Roboto Flex', sans-serif;
     font-variation-settings:
         'wdth' 120,
         'wght' 400;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
     user-select: none;
 }
 

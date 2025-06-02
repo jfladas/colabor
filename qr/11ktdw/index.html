@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Billboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.5/lib/p5.min.js"></script>
+    <script src="sketch.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../overlay.css" />
+  </head>
+  <body>
+    <div id="params">
+      <img
+        src="https://unpkg.com/pixelarticons@1.8.1/svg/arrow-down.svg"
+        id="toggle"
+        onclick="document.getElementById('params').classList.toggle('expanded')"
+      />
+      <div class="param">
+        <p>Billboard Text</p>
+        <input type="text" id="text-input" placeholder="type something..." />
+      </div>
+      <div class="param">
+        <p>Move Speed</p>
+        <input type="range" id="speed" min="1" max="30" value="10" />
+      </div>
+      <div class="param">
+        <p>Font</p>
+        <select id="font-select">
+          <option value="default">Default</option>
+          <option value="bold">Bold</option>
+          <option value="serif">Serif</option>
+          <option value="monospace">Mono</option>
+          <option value="comic">Comic</option>
+          <option value="impact">Impact</option>
+          <option value="brush">Brush</option>
+        </select>
+      </div>
+    </div>
+    <div id="overlay">
+      <h2>#11</h2>
+      <h1>Billboard</h1>
+    </div>
+  </body>
+</html>
