@@ -13,16 +13,17 @@ function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
     canvas.style('z-index', '-5')
+    canvas.style('position', 'fixed')
     noStroke()
     fill(0)
     frameRate(10)
 
-    pixelSize = floor(min(windowWidth, windowHeight) / 50)
+    pixelSize = floor(min(windowWidth, windowHeight) / 100)
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
 
-    mode = 'black'
-    step = 0.51
+    mode = 'checkered'
+    step = 0.81
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
@@ -33,17 +34,18 @@ function draw() {
 
     drawPixels()
     resetPixels()
-    /* 
-        moireCircleMasked(30, ceil(cols / 2), ceil(rows / 2), step, 'top')
-        moireCircleMasked(30, ceil(cols / 2), ceil(rows / 2), step, 'left')
-     */
-    moireCircleMasked(max(cols, rows), ceil(cols / 2), ceil(rows / 2), step, 'top')
-    moireCircleMasked(max(cols, rows), ceil(cols / 2), ceil(rows / 2), step, 'left')
 
-    if (step >= 3 || step <= 0.5) {
+    if (document.getElementById('scroll')) {
+        mode = 'horizontal'
+        moireCircleMasked(max(cols, rows), ceil(cols / 2), ceil(rows / 2), step, 'bottom')
+    } else {
+        moireCircleMasked(max(cols, rows), ceil(cols / 2), ceil(rows / 2), step, 'top')
+        moireCircleMasked(max(cols, rows), ceil(cols / 2), ceil(rows / 2), step, 'left')
+    }
+    if (step >= 1.5 || step <= 0.8) {
         dir = -dir
     }
-    step += 0.005 * dir;
+    step += 0.001 * dir;
 }
 
 function windowResized() {
@@ -136,30 +138,6 @@ function resetPixels() {
             }
             break
     }
-}
-
-function displayStep() {
-    textSize(32);
-    textAlign(RIGHT, TOP);
-    textFont('monospace');
-    textStyle(BOLD);
-    fill(20);
-    text(`${step.toFixed(2)}`, width - 12, 10);
-    text(`${step.toFixed(2)}`, width - 8, 10);
-    fill(0);
-    text(`${step.toFixed(2)}`, width - 10, 10);
-}
-
-function displayFps() {
-    textSize(32);
-    textAlign(LEFT, TOP);
-    textFont('monospace');
-    textStyle(BOLD);
-    fill(20);
-    text(`FPS: ${frameRate().toFixed(2)} `, 8, 10);
-    text(`FPS: ${frameRate().toFixed(2)} `, 12, 10);
-    fill(0);
-    text(`FPS: ${frameRate().toFixed(2)} `, 10, 10);
 }
 
 function addRandomRects() {
@@ -373,10 +351,7 @@ function raisedCircle(radius, x, y, height = 1) {
 }
 
 function moireCircle(radius, x, y, s, dir = 'top') {
-    let offset = rows
-    if (rows < cols) {
-        offset = cols
-    }
+    let offset = min(rows, cols)
     switch (dir) {
         default:
         case 'top':
@@ -399,6 +374,9 @@ function moireCircle(radius, x, y, s, dir = 'top') {
                 invertCircle(radius, offset + x - i, y)
             }
             break
+    }
+    if (floor(offset / s) % 2 == 0) {
+        invertCircle(radius, x, y)
     }
 }
 
@@ -429,7 +407,6 @@ function moireCircleMasked(radius, x, y, s, dir = 'top') {
     }
     if (floor(offset / s) % 2 == 0) {
         invertCircle(radius, x, y)
-
     }
 }
 

@@ -11,6 +11,8 @@ body {
         background: #fff;
         color: #000;
     }
+
+    overflow-x: hidden;
 }
 
 .icon {

@@ -1,0 +1,23 @@
+body {
+    text-align: center;
+}
+
+h1 {
+    font-size: 5rem;
+    margin: 2rem;
+    color: #fff;
+    font-variation-settings: 'wdth' 150, 'wght' 1000;
+}
+
+p {
+    font-size: 1rem;
+    color: #fff;
+}
+
+a {
+    color: #fff;
+
+    img {
+        margin-left: 0.5rem;
+    }
+}
