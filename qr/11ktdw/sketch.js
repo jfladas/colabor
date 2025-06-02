@@ -36,12 +36,10 @@ function setup() {
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
-    inputText = document.querySelector('input[id="text-input"]').value || 'type something...';
     textX = width
 
     document.querySelector('input[id="text-input"]')?.addEventListener('input', () => {
         localStorage.setItem('qr11', 'done');
-        inputText = document.querySelector('input[id="text-input"]').value
     })
     document.querySelector('input[id="speed"]')?.addEventListener('input', e => {
         moveSpeed = Number(e.target.value)
@@ -70,6 +68,7 @@ function windowResized() {
 }
 
 function draw() {
+    inputText = document.querySelector('input[id="text-input"]').value || 'type something...';
     textX -= moveSpeed
     if (textX < -textGfx.textWidth(inputText) - 100) {
         textX = width
