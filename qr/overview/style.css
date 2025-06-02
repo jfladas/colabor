@@ -1,13 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght@8..144,-10..0,25..151,100..1000&display=swap');
 
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+* {
     font-family: 'Roboto Flex', sans-serif;
     font-variation-settings:
         'wdth' 120,
         'wght' 400;
+
+    ::selection {
+        background: #000;
+        color: #fff;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 #container {
@@ -73,10 +81,85 @@ body {
         }
     }
 
-    .found:hover {
+    .options {
+        cursor: pointer;
+    }
+
+    .found:hover,
+    .options:hover {
         .icon {
             transform: scale(1.2);
         }
+    }
+}
+
+#overlay,
+#options {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30rem;
+    max-width: 80vw;
+    height: fit-content;
+    max-height: 80vh;
+    background-color: #fff;
+    color: #000;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 3rem;
+    border: #000 5px solid;
+
+    h1 {
+        margin: 1rem 0 0.5rem 0;
+        font-variation-settings:
+            'wdth' 150,
+            'wght' 1000;
+    }
+
+    h2 {
+        margin: 0.5rem 0;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        margin: 1rem;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease-in-out;
+
+        .icon {
+            width: 2rem !important;
+            height: 2rem !important;
+            filter: invert(1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        &:hover {
+            filter: invert(1);
+            font-variation-settings:
+                'wdth' 150,
+                'wght' 800;
+        }
+    }
+
+    .close {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 3rem;
+        height: 3rem;
+        cursor: pointer;
     }
 }
 
