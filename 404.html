@@ -3,8 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>404 Not Found</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="404.css" />
     <style></style>
   </head>
   <body>
@@ -17,4 +15,44 @@
       />
     </a>
   </body>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght@8..144,-10..0,25..151,100..1000&display=swap");
+    body {
+      overflow-x: hidden;
+      background-color: #000;
+      font-family: "Roboto Flex", sans-serif;
+      font-variation-settings: "wdth" 120, "wght" 400;
+
+      text-align: center;
+      ::selection {
+        background: #fff;
+        color: #000;
+      }
+    }
+    .icon {
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+    h1 {
+      font-size: 5rem;
+      margin: 2rem;
+      color: #fff;
+      font-variation-settings: "wdth" 150, "wght" 1000;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #fff;
+    }
+    a {
+      color: #fff;
+      font-variation-settings: "wdth" 200, "wght" 600;
+
+      img {
+        filter: invert(1);
+        transform: translate(0, 0.6rem);
+        margin-left: 0.5rem;
+      }
+    }
+  </style>
 </html>
