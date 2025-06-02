@@ -12,6 +12,8 @@ let speed = 0.2
 let playing = false
 let played = false
 
+let start = false
+
 const msg = document.getElementById('msg');
 
 function setup() {
@@ -48,6 +50,14 @@ function setup() {
             }, 15000);
         }
     }, 3000);
+
+    setTimeout(() => {
+        start = true;
+    }, 1000);
+}
+
+function windowResized() {
+    setup()
 }
 
 function draw() {
@@ -55,15 +65,17 @@ function draw() {
     drawPixels()
     resetPixels()
 
-    if (mouseIsPressed) {
-        if (height > 0) {
-            height -= speed
-            if (height < 0) height = 0
-        }
-    } else {
-        if (height < 1) {
-            height += speed
-            if (height > 1) height = 1
+    if (start) {
+        if (mouseIsPressed) {
+            if (height > 0) {
+                height -= speed
+                if (height < 0) height = 0
+            }
+        } else {
+            if (height < 1) {
+                height += speed
+                if (height > 1) height = 1
+            }
         }
     }
 

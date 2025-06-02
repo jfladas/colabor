@@ -8,10 +8,12 @@ let mode
 
 let shown = false
 
+let first = true;
+
 let countdownSeconds = 10 * 60;
 let lastSecond = 0;
 let timerEnded = false;
-let first = true;
+let init = true;
 
 let messages = [
     { txt: "Wait for 10 minutes", delay: 3000 },
@@ -49,19 +51,25 @@ function setup() {
 
     resetPixels()
 
-    msg = document.getElementById('msg');
-
-    for (let m = 0; m < messages.length; m++) {
-        setTimeout(() => {
-            if (m !== 12 && m !== 13) {
-                msg.innerText = messages[m].txt;
-                msg.style.opacity = 1;
-                setTimeout(() => {
-                    msg.style.opacity = 0;
-                }, 3000);
-            }
-        }, messages[m].delay);
+    if (first) {
+        msg = document.getElementById('msg');
+        for (let m = 0; m < messages.length; m++) {
+            setTimeout(() => {
+                if (m !== 12 && m !== 13) {
+                    msg.innerText = messages[m].txt;
+                    msg.style.opacity = 1;
+                    setTimeout(() => {
+                        msg.style.opacity = 0;
+                    }, 3000);
+                }
+            }, messages[m].delay);
+        }
+        first = false;
     }
+}
+
+function windowResized() {
+    setup()
 }
 
 function draw() {

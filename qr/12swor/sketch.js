@@ -23,6 +23,10 @@ function setup() {
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 }
 
+function windowResized() {
+    setup()
+}
+
 function draw() {
 
     drawPixels()

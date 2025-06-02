@@ -16,37 +16,37 @@ const engine = Engine.create();
 const world = engine.world;
 const runner = Runner.create();
 Runner.run(runner, engine);
+let ground, leftWall, rightWall;
 
 const wallThickness = 60;
 
-const ground = Bodies.rectangle(
-    window.innerWidth / 2,
-    window.innerHeight + 30,
-    window.innerWidth + wallThickness * 2,
-    wallThickness,
-    { isStatic: true }
-);
-World.add(world, ground);
-
-const leftWall = Bodies.rectangle(
-    -wallThickness / 2,
-    window.innerHeight / 2,
-    wallThickness,
-    window.innerHeight,
-    { isStatic: true }
-);
-World.add(world, leftWall);
-
-const rightWall = Bodies.rectangle(
-    window.innerWidth + wallThickness / 2,
-    window.innerHeight / 2,
-    wallThickness,
-    window.innerHeight,
-    { isStatic: true }
-);
-World.add(world, rightWall);
-
 function setup() {
+    World.clear(world);
+    ground = Bodies.rectangle(
+        window.innerWidth / 2,
+        window.innerHeight + 30,
+        window.innerWidth + wallThickness * 2,
+        wallThickness,
+        { isStatic: true }
+    );
+    World.add(world, ground);
+    leftWall = Bodies.rectangle(
+        -wallThickness / 2,
+        window.innerHeight / 2,
+        wallThickness,
+        window.innerHeight,
+        { isStatic: true }
+    );
+    World.add(world, leftWall);
+    rightWall = Bodies.rectangle(
+        window.innerWidth + wallThickness / 2,
+        window.innerHeight / 2,
+        wallThickness,
+        window.innerHeight,
+        { isStatic: true }
+    );
+    World.add(world, rightWall);
+
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
@@ -72,6 +72,10 @@ function setup() {
         }
         shown = true;
     }, 3000);
+}
+
+function windowResized() {
+    setup()
 }
 
 function draw() {

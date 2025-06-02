@@ -10,8 +10,6 @@ let step, dir = 1
 
 let mic, amplitude, micLevel = 0;
 let micStarted = false;
-let micPromptTimer = 0;
-let micPromptShown = false;
 
 let displayRadius = 60;
 
@@ -37,9 +35,18 @@ function setup() {
     mic = new p5.AudioIn();
     amplitude = new p5.Amplitude();
     micPromptTimer = millis();
-    micPromptShown = false;
+
+    setTimeout(() => {
+        if (!micStarted) {
+            document.getElementById('msg').style.opacity = 1;
+        }
+    }, 3000);
 
     canvas.mousePressed(startMic);
+}
+
+function windowResized() {
+    setup()
 }
 
 function startMic() {
@@ -50,7 +57,6 @@ function startMic() {
         mic.start(() => {
             amplitude.setInput(mic);
             micStarted = true;
-            micPromptShown = false;
             document.getElementById('msg').style.opacity = 0;
             localStorage.setItem('qr1', 'done');
         });
@@ -71,9 +77,6 @@ function draw() {
         targetRadius = constrain(targetRadius, minRadius, maxRadius);
     } else {
         targetRadius = 60;
-        if (!micPromptShown && millis() - micPromptTimer > 3000) {
-            micPromptShown = true;
-        }
     }
 
     displayRadius = lerp(displayRadius, targetRadius, 0.5);
@@ -87,11 +90,6 @@ function draw() {
         dir = -dir
     }
     step += 0.005 * dir;
-
-    if (micPromptShown && !micStarted) {
-        const msgElem = document.getElementById('msg');
-        if (msgElem) msgElem.style.opacity = 1;
-    }
 }
 
 function drawPixels() {

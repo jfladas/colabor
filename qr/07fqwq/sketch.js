@@ -19,44 +19,43 @@ const runner = Runner.create();
 Runner.run(runner, engine);
 
 const wallThickness = 60;
-
-const ground = Bodies.rectangle(
-    window.innerWidth / 2,
-    window.innerHeight + 30,
-    window.innerWidth + wallThickness * 2,
-    wallThickness,
-    { isStatic: true }
-);
-World.add(world, ground);
-
-const leftWall = Bodies.rectangle(
-    -wallThickness / 2,
-    window.innerHeight / 2,
-    wallThickness,
-    window.innerHeight,
-    { isStatic: true }
-);
-World.add(world, leftWall);
-
-const rightWall = Bodies.rectangle(
-    window.innerWidth + wallThickness / 2,
-    window.innerHeight / 2,
-    wallThickness,
-    window.innerHeight,
-    { isStatic: true }
-);
-World.add(world, rightWall);
-
-const ceiling = Bodies.rectangle(
-    window.innerWidth / 2,
-    -wallThickness / 2,
-    window.innerWidth + wallThickness * 2,
-    wallThickness,
-    { isStatic: true }
-);
-World.add(world, ceiling);
+let ground, leftWall, rightWall, ceiling;
 
 function setup() {
+    World.clear(world);
+    ground = Bodies.rectangle(
+        window.innerWidth / 2,
+        window.innerHeight + 30,
+        window.innerWidth + wallThickness * 2,
+        wallThickness,
+        { isStatic: true }
+    );
+    World.add(world, ground);
+    leftWall = Bodies.rectangle(
+        -wallThickness / 2,
+        window.innerHeight / 2,
+        wallThickness,
+        window.innerHeight,
+        { isStatic: true }
+    );
+    World.add(world, leftWall);
+    rightWall = Bodies.rectangle(
+        window.innerWidth + wallThickness / 2,
+        window.innerHeight / 2,
+        wallThickness,
+        window.innerHeight,
+        { isStatic: true }
+    );
+    World.add(world, rightWall);
+    ceiling = Bodies.rectangle(
+        window.innerWidth / 2,
+        -wallThickness / 2,
+        window.innerWidth + wallThickness * 2,
+        wallThickness,
+        { isStatic: true }
+    );
+    World.add(world, ceiling);
+
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
@@ -78,7 +77,7 @@ function setup() {
 
     if (screen.orientation && screen.orientation.lock) {
         screen.orientation.lock("portrait").catch(function (err) {
-            console.error("Orientation lock failed: ", err);
+            console.warn("Orientation lock failed: ", err);
         });
     }
 
@@ -88,6 +87,10 @@ function setup() {
             shown = true;
         }
     }, 3000);
+}
+
+function windowResized() {
+    setup()
 }
 
 function draw() {
@@ -203,7 +206,7 @@ function pixellateMatter() {
             let px = (i + 0.5) * pixelSize;
             let py = (j + 0.5) * pixelSize;
             for (let body of world.bodies) {
-                if (body === ground) continue;
+                if (body === ground || body === leftWall || body === rightWall || body === ceiling) continue;
                 if (body.circleRadius) {
                     let dx = px - body.position.x;
                     let dy = py - body.position.y;

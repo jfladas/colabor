@@ -65,9 +65,13 @@ function setup() {
     });
 }
 
+function windowResized() {
+    setup()
+}
+
 function draw() {
     textX -= moveSpeed
-    if (textX < -textGfx.textWidth(inputText)) {
+    if (textX < -textGfx.textWidth(inputText) - 100) {
         textX = width
     }
     if (document.getElementById('params')?.classList.contains('expanded')) {

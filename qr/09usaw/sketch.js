@@ -8,6 +8,8 @@ let mode
 
 let shown = false
 
+let first = true
+
 let vid, imgColors = []
 let isShaking = false
 let lastMouseX = 0, lastMouseY = 0
@@ -35,12 +37,15 @@ function setup() {
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
-    vid = createVideo('video.mp4', () => {
-        vid.loop()
-        vid.volume(0)
-        vid.hide()
-        vid.play()
-    })
+    if (first) {
+        vid = createVideo('video.mp4', () => {
+            vid.loop()
+            vid.volume(0)
+            vid.hide()
+            vid.play()
+        })
+        first = false;
+    }
 
     resetPixels()
 
@@ -70,6 +75,10 @@ function setup() {
             }
         })
     }
+}
+
+function windowResized() {
+    setup()
 }
 
 function draw() {

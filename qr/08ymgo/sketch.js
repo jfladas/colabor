@@ -48,6 +48,10 @@ function setup() {
     }, 3000);
 }
 
+function windowResized() {
+    setup()
+}
+
 function draw() {
 
     drawPixels()

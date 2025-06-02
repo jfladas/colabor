@@ -4,7 +4,6 @@ if (localStorage.getItem('qr2') !== 'done') {
 let pixelSize
 let pixels = []
 let rows, cols
-let mode
 
 let video
 let vidPixels = []
@@ -22,15 +21,54 @@ function setup() {
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
 
-    mode = 'checkered'
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
     vidPixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
     resetPixels()
 
+    let maxDim = max(cols, rows) * 2;
     video = createCapture(VIDEO)
-    video.size(cols, rows)
+    video.size(maxDim, maxDim);
     video.hide()
+
+    video.elt.onloadedmetadata = () => {
+        let srcW = video.elt.videoWidth;
+        let srcH = video.elt.videoHeight;
+        let aspectVideo = srcW / srcH;
+        let aspectCanvas = cols / rows;
+
+        let bufW = video.width;
+        let bufH = video.height;
+        let cropX, cropY, cropW, cropH;
+        if (aspectCanvas > aspectVideo) {
+            cropW = bufW;
+            cropH = Math.round(bufW / aspectCanvas);
+            cropX = 0;
+            cropY = Math.floor((bufH - cropH) / 2);
+        } else {
+            cropH = bufH;
+            cropW = Math.round(bufH * aspectCanvas);
+            cropY = 0;
+            cropX = Math.floor((bufW - cropW) / 2);
+        }
+        video.cropInfo = {
+            vidW: bufW,
+            vidH: bufH,
+            cropX,
+            cropY,
+            cropCols: cropW,
+            cropRows: cropH
+        };
+    };
+
+    video.cropInfo = {
+        vidW: video.width,
+        vidH: video.height,
+        cropX: 0,
+        cropY: 0,
+        cropCols: video.width,
+        cropRows: video.height
+    };
 
     const btn = document.getElementById('download-btn');
     if (btn) {
@@ -40,6 +78,10 @@ function setup() {
             resetPixels();
         });
     }
+}
+
+function windowResized() {
+    setup()
 }
 
 function draw() {
@@ -66,78 +108,14 @@ function drawPixels() {
 }
 
 function resetPixels() {
-    switch (mode) {
-        case 'horizontal':
-            for (let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    if (i % 2 == 0) {
-                        pixels[i][j] = 0
-                    } else {
-                        pixels[i][j] = 1
-                    }
-                }
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if ((i + j) % 2 == 0) {
+                pixels[i][j] = 0
+            } else {
+                pixels[i][j] = 1
             }
-            break
-        case 'vertical':
-            for (let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    if (j % 2 == 0) {
-                        pixels[i][j] = 0
-                    } else {
-                        pixels[i][j] = 1
-                    }
-                }
-            }
-            break
-        case 'checkered':
-            for (let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    if ((i + j) % 2 == 0) {
-                        pixels[i][j] = 0
-                    } else {
-                        pixels[i][j] = 1
-                    }
-                }
-            }
-            break
-        case 'rectangle':
-            for (let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    if (
-                        (i > j && rows - i > j && j < (cols / 2)) ||
-                        (i > (cols - j) && rows - i > (cols - j) && j >= (cols / 2))
-                    ) {
-                        if (j % 2 == 0) {
-                            pixels[i][j] = 0
-                        } else {
-                            pixels[i][j] = 1
-                        }
-                    }
-                    else {
-                        if (i % 2 == 0) {
-                            pixels[i][j] = 0
-                        } else {
-                            pixels[i][j] = 1
-                        }
-                    }
-                }
-            }
-            break
-        default:
-        case 'white':
-            for (let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    pixels[i][j] = 0
-                }
-            }
-            break
-        case 'black':
-            for (let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    pixels[i][j] = 1
-                }
-            }
-            break
+        }
     }
 }
 
@@ -146,16 +124,27 @@ function obstructVideo() {
     if (video.elt.readyState !== 4) {
         return;
     }
+    let { vidW, vidH, cropX, cropY, cropCols, cropRows } = video.cropInfo || {};
+    if (!vidW || !vidH) {
+        vidW = video.width;
+        vidH = video.height;
+        cropX = 0;
+        cropY = 0;
+        cropCols = vidW;
+        cropRows = vidH;
+    }
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-            let index = (j * video.width + i) * 4
-            let brightness = (video.pixels[index] + video.pixels[index + 1] + video.pixels[index + 2]) / 3
-            vidPixels[j][cols - i - 1] = brightness > 100 ? 0 : 1
+            let vi = cropX + floor(i * cropCols / cols);
+            let vj = cropY + floor(j * cropRows / rows);
+            vi = constrain(vi, 0, vidW - 1);
+            vj = constrain(vj, 0, vidH - 1);
+            let index = (vj * vidW + vi) * 4;
+            let brightness = (video.pixels[index] + video.pixels[index + 1] + video.pixels[index + 2]) / 3;
+            vidPixels[j][cols - i - 1] = brightness > 100 ? 0 : 1;
 
             if (vidPixels[j][i] == 1) {
-                if (mode == 'vertical' && i > 0) {
-                    pixels[j][i] = pixels[j][i - 1]
-                } else if (mode != 'vertical' && j > 0) {
+                if (j > 0) {
                     pixels[j][i] = pixels[j - 1][i]
                 } else {
                     pixels[j][i] = 1
