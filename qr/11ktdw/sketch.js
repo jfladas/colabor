@@ -36,7 +36,7 @@ function setup() {
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
-    inputText = 'type something...'
+    inputText = document.querySelector('input[id="text-input"]').value || 'type something...';
     textX = width
 
     document.querySelector('input[id="text-input"]')?.addEventListener('input', () => {

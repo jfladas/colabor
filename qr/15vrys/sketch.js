@@ -46,6 +46,10 @@ function setup() {
     });
 }
 
+function windowResized() {
+    setup()
+}
+
 function draw() {
 
     drawPixels()

@@ -85,8 +85,8 @@ function draw() {
         }
         drawCountdownPixellated(countdownSeconds);
     } else {
-        if (first) {
-            first = false;
+        if (init) {
+            init = false;
             msg.innerText = `I didn't expect you to stay...
             Thank you.`;
             msg.style.opacity = 1;
