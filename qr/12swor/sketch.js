@@ -74,7 +74,11 @@ function setClock() {
 
     invertCircleSlice(side / pixelSize / 2.5, cols / 2, rows / 2, minutes / 60 + seconds / 3600);
 
-    invertCircleSlice(side / pixelSize / 3.5, cols / 2, rows / 2, hours / 24 + minutes / 1440);
+    invertCircleSlice(side / pixelSize / 3.5, cols / 2, rows / 2, hours / 12 + minutes / 1440);
+    if (hours >= 12) {
+        hours -= 12;
+        invertCircleSlice(side / pixelSize / 3.5, cols / 2, rows / 2, hours / 12 + minutes / 1440);
+    }
 }
 
 function drawPixels() {

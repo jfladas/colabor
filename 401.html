@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>401 Unauthorized</title>
+  </head>
+  <body>
+    <h3>401</h3>
+    <p>
+      You are not authorized to view this page. If you think this is a mistake,
+      please contact the site administrator.
+    </p>
+    <br />
+    <span class="bold">Error Code</span>
+    <br />
+    <span class="italic">401</span>
+    <br /><br />
+    <span class="bold">Description</span>
+    <br />
+    <span class="italic"
+      >Access to this resource requires valid authentication credentials.</span
+    >
+    <br /><br />
+    <span class="bold">Server Time</span>
+    <br />
+    <span id="server-time" class="italic"></span>
+    <script>
+      localStorage.setItem("qr14", "done");
+      const now = new Date();
+      const iso = now.toISOString();
+      const formattedTime = iso
+        .replace(/T/, "-")
+        .replace(/:/g, "-")
+        .replace(/\./, "-")
+        .slice(0, 23);
+      document.getElementById("server-time").textContent = formattedTime;
+    </script>
+    <br /><br />
+    <span class="bold">Possible reasons you are seeing this page:</span>
+    <br />
+    <ul>
+      <li class="italic">
+        You do not have the necessary permissions to access this content.
+      </li>
+      <li class="italic">The server is on a break. (See Sprint 2)</li>
+      <li class="italic">You aren't supposed to see this. Yet.</li>
+    </ul>
+    <br />
+    <p>This incident has been logged. Please return to the overview page.</p>
+    <br />
+    <a href="/qr/overview">
+      Go to overview
+      <img
+        src="https://unpkg.com/pixelarticons@1.8.1/svg/arrow-right.svg"
+        class="icon"
+      />
+    </a>
+  </body>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght@8..144,-10..0,25..151,100..1000&display=swap");
+    body {
+      overflow-x: hidden;
+      padding: 1rem;
+      background-color: #000;
+      color: #fff;
+      font-family: "Roboto Flex", sans-serif;
+      font-variation-settings: "wdth" 120, "wght" 400;
+      text-align: center;
+      max-width: 40rem;
+      margin: 0 auto;
+
+      ::selection {
+        background: #fff;
+        color: #000;
+      }
+    }
+    .icon {
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+    h3 {
+      text-align: center;
+      font-size: 5rem;
+      margin: 2rem;
+      color: #fff;
+      font-variation-settings: "wdth" 150, "wght" 1000;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .bold {
+      font-size: 1.2rem;
+      font-variation-settings: "wdth" 150, "wght" 800;
+    }
+    .italic {
+      font-size: 0.8rem;
+      font-variation-settings: "wdth" 120, "wght" 400, "slnt" -10;
+    }
+    a {
+      color: #fff;
+      font-variation-settings: "wdth" 150, "wght" 600;
+
+      img {
+        filter: invert(1);
+        transform: translate(0, 0.6rem);
+        margin-left: 0.5rem;
+      }
+    }
+    ul {
+      margin: 0.5rem;
+      padding-left: 0.5rem;
+    }
+    li {
+      margin-bottom: 0.5rem;
+      list-style-type: none;
+    }
+  </style>
+</html>

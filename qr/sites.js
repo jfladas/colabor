@@ -53,7 +53,7 @@ export const sites = [
     },
     {
         id: '14xopv',
-        title: '401 Unauthorized'
+        title: 'Unauthorized'
     },
     {
         id: '15vrys',
@@ -61,6 +61,6 @@ export const sites = [
     },
     {
         id: '16trjr',
-        title: 'All at once'
+        title: 'All at Once'
     }
 ];

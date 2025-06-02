@@ -27,7 +27,7 @@ const qr = [
 ]
 
 if (/Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)) {
-    window.location.href = '/qr/overview';
+    window.location.replace('/qr/overview');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             row.forEach(cell => {
                 const cellDiv = document.createElement('div');
                 cellDiv.className = cell === 0 ? 'cell' : 'cell full';
-                const imgNum = Math.floor(Math.random() * 14) + 1; // Random number between 1 and 14
+                const imgNum = Math.floor(Math.random() * 16) + 1;
                 const imgPath = `assets/${imgNum.toString().padStart(2, '0')}w.png`;
                 cellDiv.style.backgroundImage = `url('${imgPath}')`;
                 cellDiv.style.backgroundSize = 'cover';
@@ -55,7 +55,7 @@ function animateQRCode() {
     const cells = document.querySelectorAll('.cell');
     cells.forEach((cell, index) => {
         setTimeout(() => {
-            const imgNum = Math.floor(Math.random() * 15) + 1;
+            const imgNum = Math.floor(Math.random() * 16) + 1;
             const imgPath = `assets/${imgNum.toString().padStart(2, '0')}w.png`;
             cell.style.backgroundImage = `url('${imgPath}')`;
         }, index * 100);
