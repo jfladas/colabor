@@ -4,7 +4,6 @@ if (localStorage.getItem('qr11') !== 'done') {
 let pixelSize
 let pixels = []
 let rows, cols
-let side
 let mode
 
 let shown = false
@@ -17,18 +16,14 @@ let moveSpeed = 10
 
 const fontMap = {
     'default': 'Roboto Flex',
-    'bold': 'Arial Black',
-    'sans-serif': 'Arial',
+    'bold': 'Archivo Black',
     'serif': 'Times New Roman',
-    'monospace': 'JetBrains Mono',
-    'comic': 'Comic Sans MS',
-    'impact': 'Impact',
-    'brush': 'Brush Script MT'
+    'mono': 'JetBrains Mono',
+    'script': 'Imperial Script'
 };
 let font = fontMap['default'];
 
 function setup() {
-    side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
     background(255)
@@ -62,6 +57,11 @@ function setup() {
         const v = e.target.value;
         font = fontMap[v];
         textGfx.textFont(font);
+        if (v === 'script') {
+            textGfx.textSize(windowHeight / 2);
+        } else {
+            textGfx.textSize(windowHeight / 3);
+        }
     });
 }
 
