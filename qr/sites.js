@@ -49,7 +49,7 @@ export const sites = [
     },
     {
         id: '13hbem',
-        title: 'Game of Life'
+        title: 'Spirits'
     },
     {
         id: '14xopv',

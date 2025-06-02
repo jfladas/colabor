@@ -4,7 +4,6 @@ let pixelSize
 let pixels = []
 let rows, cols
 let side
-let mode
 
 let shown = false
 
