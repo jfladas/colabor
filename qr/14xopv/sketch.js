@@ -7,6 +7,8 @@ let pixels = []
 let rows, cols
 let mode
 
+let shown = false;
+
 let fallingCircles = [];
 let osc, playing = false;
 let activeOscillators = []; // Store multiple oscillators for simultaneous sounds
@@ -37,6 +39,13 @@ function setup() {
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
     lastKeyChange = millis();
+
+    setTimeout(() => {
+        if (!shown) {
+            document.getElementById('msg').style.opacity = 1;
+            shown = true;
+        }
+    }, 3000);
 }
 
 function windowResized() {
@@ -178,6 +187,8 @@ function obstructCircle(radius, x, y) {
 }
 
 function mousePressed() {
+    document.getElementById('msg').style.opacity = 0;
+    shown = true;
     window.userStartAudio && window.userStartAudio();
     if (!osc) {
         osc = new p5.Oscillator();

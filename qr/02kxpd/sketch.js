@@ -9,14 +9,13 @@ let video
 let vidPixels = []
 
 function setup() {
-    let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
     background(255)
     noStroke()
     frameRate(10)
 
-    pixelSize = floor(side / 150)
+    pixelSize = floor(min(windowWidth, windowHeight) / 100)
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
