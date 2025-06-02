@@ -9,6 +9,7 @@
   </head>
   <body>
     <div id="overlay">
+      <h1>Pretty empty here, huh?</h1>
       <h2>Looks like you haven't discovered any of the pages yet...</h2>
       <h2>Try scanning the smaller QR codes that make up the big one!</h2>
       <h1>Alternatively...</h1>
@@ -20,9 +21,7 @@
         />
         Unlock All Pages
       </button>
-      <h2>
-        Note that this will remove the possibility to unlock the final page
-      </h2>
+      <h2>Note that this will remove the possibility to unlock page #16</h2>
     </div>
     <div id="options">
       <div class="close">
@@ -41,9 +40,7 @@
         />
         Unlock All Pages
       </button>
-      <h2>
-        Note that this will remove the possibility to unlock the final page
-      </h2>
+      <h2>Note that this will remove the possibility to unlock page #16</h2>
       <h1>Reset</h1>
       <h2>
         You can click on the button below to reset your progress and start over:
@@ -58,14 +55,16 @@
         />
         Reset Progress
       </button>
-      <h2>This will restore the possibility to unlock the final page</h2>
+      <h2>This will restore the possibility to unlock page #16</h2>
     </div>
     <div id="container"></div>
   </body>
   <script>
     function unlockAll() {
       for (let i = 1; i <= 15; i++) {
-        localStorage.setItem(`qr${i}`, "found");
+        if (localStorage.getItem(`qr${i}`) !== "done") {
+          localStorage.setItem(`qr${i}`, "found");
+        }
       }
       localStorage.setItem("final", "no");
       location.reload();

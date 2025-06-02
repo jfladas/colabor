@@ -7,13 +7,11 @@ let pixels = []
 let lifePixels = []
 let lifeAges = []
 let rows, cols
-let side
 let mode
 
 let shown = false
 
 function setup() {
-    side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
     background(255)

@@ -53,7 +53,7 @@ export const sites = [
     },
     {
         id: '14xopv',
-        title: 'Unauthorized'
+        title: 'Musician'
     },
     {
         id: '15vrys',
