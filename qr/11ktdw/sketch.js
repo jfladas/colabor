@@ -23,6 +23,7 @@ const fontMap = {
 };
 let font = fontMap['default'];
 
+const iframe = window.self !== window.top;
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
@@ -30,6 +31,10 @@ function setup() {
     noStroke()
 
     pixelSize = floor(windowHeight / 150)
+    if (iframe) {
+        pixelSize = 5;
+        document.getElementById('params').style.display = 'none';
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
@@ -49,6 +54,9 @@ function setup() {
     textGfx.textAlign(LEFT, CENTER)
     textGfx.textFont(font)
     textGfx.textSize(windowHeight / 3)
+    if (iframe) {
+        textGfx.textSize(windowHeight);
+    }
     textGfx.fill(0)
     textGfx.noStroke()
     document.querySelector('#font-select')?.addEventListener('change', e => {
@@ -73,7 +81,7 @@ function draw() {
     if (textX < -textGfx.textWidth(inputText) - 100) {
         textX = width
     }
-    if (document.getElementById('params')?.classList.contains('expanded')) {
+    if (document.getElementById('params')?.classList.contains('expanded') || iframe) {
         textY = textGfx.height / 2
     } else {
         textY = textGfx.height / 3

@@ -18,7 +18,7 @@ function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
     //canvas.position((windowWidth - side) / 2, (windowHeight - side) / 2)
     canvas.position(0, 0)
-    background(200)
+    background(255)
     noStroke()
     frameRate(10)
 

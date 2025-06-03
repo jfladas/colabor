@@ -11,6 +11,7 @@ let mode
 
 let shown = false
 
+const iframe = window.self !== window.top;
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
@@ -19,6 +20,9 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(windowHeight / 150)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     mode = 'rectangle'
 

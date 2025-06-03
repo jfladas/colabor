@@ -16,6 +16,7 @@ let start = false
 
 const msg = document.getElementById('msg');
 
+const iframe = window.self !== window.top;
 function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -25,6 +26,9 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(side / 150)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
@@ -87,7 +91,11 @@ function draw() {
             console.error('Error playing sound:', e);
         }
     }
-    raisedCircle(60, ceil(cols / 2), ceil(rows / 2) + 5, height)
+    if (!iframe) {
+        raisedCircle(60, ceil(cols / 2), ceil(rows / 2) + 5, height)
+    } else {
+        raisedCircle(5, ceil(cols / 2), ceil(rows / 2), height)
+    }
 }
 
 function drawPixels() {
@@ -193,7 +201,11 @@ function obstructCircle(radius, x, y) {
         for (let i = 0; i < cols; i++) {
             for (let j = 0; j < rows; j++) {
                 if (distSq(i, j, x, y) <= radius ** 2) {
-                    pixels[j][i] = pixels[j][i - 1]
+                    if (i > 0) {
+                        pixels[j][i] = pixels[j][i - 1]
+                    } else {
+                        pixels[j][i] = 1;
+                    }
                 }
             }
         }
@@ -201,7 +213,11 @@ function obstructCircle(radius, x, y) {
         for (let i = 0; i < cols; i++) {
             for (let j = 0; j < rows; j++) {
                 if (distSq(i, j, x, y) <= radius ** 2) {
-                    pixels[j][i] = pixels[j - 1][i]
+                    if (j > 0) {
+                        pixels[j][i] = pixels[j - 1][i]
+                    } else {
+                        pixels[j][i] = 1;
+                    }
                 }
             }
         }

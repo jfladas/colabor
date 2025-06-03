@@ -13,6 +13,7 @@ let micStarted = false;
 
 let displayRadius = 60;
 
+const iframe = window.self !== window.top;
 function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -22,6 +23,9 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(side / 150)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
@@ -69,6 +73,10 @@ function draw() {
         micLevel = amplitude.getLevel();
         let minRadius = 20;
         let maxRadius = 120;
+        if (iframe) {
+            minRadius = 1;
+            maxRadius = 10;
+        }
         if (pixelSize < 5) {
             targetRadius = map(micLevel, 0, 0.1, minRadius, maxRadius);
         } else {
@@ -77,6 +85,9 @@ function draw() {
         targetRadius = constrain(targetRadius, minRadius, maxRadius);
     } else {
         targetRadius = 60;
+        if (iframe) {
+            targetRadius = 10;
+        }
     }
 
     displayRadius = lerp(displayRadius, targetRadius, 0.5);

@@ -8,6 +8,7 @@ let rows, cols
 let video
 let vidPixels = []
 
+const iframe = window.self !== window.top;
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
@@ -16,6 +17,10 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(min(windowWidth, windowHeight) / 100)
+    if (iframe) {
+        pixelSize = 5;
+        document.getElementById('download-btn').style.display = 'none';
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)

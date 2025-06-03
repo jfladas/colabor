@@ -19,6 +19,7 @@ let ripples = [
 let rippleSpeed = 2
 let rippleMax
 
+const iframe = window.self !== window.top;
 function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -28,6 +29,17 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(side / 150)
+    if (iframe) {
+        pixelSize = 5;
+        ripples = [
+            {
+                x: floor(windowWidth / pixelSize / 2),
+                y: floor(windowHeight / pixelSize / 2),
+                radius: 0,
+                active: true
+            }
+        ];
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)

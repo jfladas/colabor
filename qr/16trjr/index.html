@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quick Response</title>
     <link rel="stylesheet" href="../overlay.css" />
-    <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.5/lib/p5.min.js"></script>
     <script src="sketch.js" defer></script>
-    <script src="script.js" defer></script>
   </head>
   <body>
     <div id="overlay" style="display: none">
@@ -16,4 +14,17 @@
       <h1>All at Once</h1>
     </div>
   </body>
+  <script>
+    if (localStorage.getItem("final") === "yes") {
+      document.title = "All at Once";
+      document.getElementById("overlay").style.display = "flex";
+    } else {
+      window.location.replace("/401.html");
+    }
+  </script>
+  <style>
+    body {
+      background-color: #000;
+    }
+  </style>
 </html>

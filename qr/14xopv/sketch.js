@@ -11,7 +11,7 @@ let shown = false;
 
 let fallingCircles = [];
 let osc, playing = false;
-let activeOscillators = []; // Store multiple oscillators for simultaneous sounds
+let activeOscillators = [];
 
 let keyNote = 60;
 let keyScale = [0, 2, 4, 5, 7, 9, 11];
@@ -21,16 +21,22 @@ const minorScale = [0, 2, 3, 5, 7, 8, 10];
 let keyChangeInterval = 10000;
 let lastKeyChange = 0;
 
-
+const iframe = window.self !== window.top;
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
     background(255)
     noStroke()
     frameRate(30)
+    if (iframe) {
+        frameRate(10);
+    }
     fill(0)
 
     pixelSize = floor(windowHeight / 150)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     mode = 'vertical'
 
@@ -199,6 +205,9 @@ function mousePressed() {
     let x = floor(mouseX / pixelSize);
     let y = floor(mouseY / pixelSize);
     let radius = map(y, 0, rows, 10, 1);
+    if (iframe) {
+        radius = 2;
+    }
     let vy = map(y, 0, rows, 3, 0.5);
     fallingCircles.push({
         x: x,

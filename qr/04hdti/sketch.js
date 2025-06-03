@@ -8,14 +8,23 @@ let mode
 
 let pen
 
+const iframe = window.self !== window.top;
 function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
     background(255)
     noStroke()
+    if (iframe) {
+        frameRate(10)
+    }
 
     pixelSize = floor(side / 150)
+    if (iframe) {
+        pixelSize = 5;
+        document.getElementById('params').style.display = 'none';
+        document.getElementById('width').value = 1;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
@@ -226,7 +235,11 @@ function obstructCircle(radius, x, y) {
         for (let i = 0; i < cols; i++) {
             for (let j = 0; j < rows; j++) {
                 if (distSq(i, j, x, y) <= radius ** 2) {
-                    pixels[j][i] = pixels[j - 1][i]
+                    if (j - 1 >= 0) {
+                        pixels[j][i] = pixels[j - 1][i]
+                    } else {
+                        pixels[j][i] = 1
+                    }
                 }
             }
         }

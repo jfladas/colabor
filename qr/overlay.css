@@ -8,6 +8,7 @@
 }
 
 body {
+    background-color: #fff;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -29,6 +30,7 @@ body {
     align-items: center;
     opacity: 1;
     animation: hide 2s ease-in-out forwards;
+    text-align: center;
 
     h1 {
         margin: 0;
@@ -63,4 +65,18 @@ body {
     padding: 0.5rem 1rem;
     opacity: 0;
     transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 200px) {
+    #msg {
+        display: none;
+    }
+
+    #overlay h1 {
+        font-size: 1rem;
+    }
+
+    #overlay {
+        font-size: 0.5rem;
+    }
 }

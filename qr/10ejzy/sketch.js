@@ -34,6 +34,7 @@ let messages = [
 ];
 let msg
 
+const iframe = window.self !== window.top;
 function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -43,6 +44,9 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(side / 50)
+    if (iframe) {
+        pixelSize = 3;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)

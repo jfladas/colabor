@@ -20,6 +20,7 @@ let ground, leftWall, rightWall;
 
 const wallThickness = 60;
 
+const iframe = window.self !== window.top;
 function setup() {
     World.clear(world);
     ground = Bodies.rectangle(
@@ -55,6 +56,9 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(side / 50)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)

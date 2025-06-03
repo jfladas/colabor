@@ -21,6 +21,7 @@ Runner.run(runner, engine);
 const wallThickness = 60;
 let ground, leftWall, rightWall, ceiling;
 
+const iframe = window.self !== window.top;
 function setup() {
     World.clear(world);
     ground = Bodies.rectangle(
@@ -64,6 +65,9 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(side / 100)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
@@ -189,7 +193,10 @@ function distSq(x1, y1, x2, y2) {
 }
 
 function addBalls() {
-    const radius = pixelSize * 5;
+    let radius = pixelSize * 5;
+    if (iframe) {
+        radius = pixelSize * 3;
+    }
     const x = mouseX;
     const y = mouseY;
     const c = Bodies.circle(x, y, radius + (Math.random() - 0.5) * radius, {

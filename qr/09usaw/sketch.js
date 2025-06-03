@@ -22,6 +22,7 @@ let shakeIntensity = 0
 let lastAccelMag = 0
 let accelIntensity = 0
 
+const iframe = window.self !== window.top;
 function setup() {
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -31,6 +32,9 @@ function setup() {
     frameRate(10)
 
     pixelSize = floor(side / 150)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)

@@ -15,13 +15,17 @@ let step, dir = 1
 
 let shown = false
 
+const iframe = window.self !== window.top;
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
-    background(200)
+    background(255)
     noStroke()
     frameRate(10)
 
     pixelSize = floor(windowHeight / 150)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)

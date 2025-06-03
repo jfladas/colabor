@@ -7,6 +7,7 @@ let side
 
 let shown = false
 
+const iframe = window.self !== window.top;
 function setup() {
     side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
@@ -15,6 +16,9 @@ function setup() {
     noStroke()
 
     pixelSize = floor(side / 100)
+    if (iframe) {
+        pixelSize = 5;
+    }
 
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
