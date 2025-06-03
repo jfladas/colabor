@@ -30,10 +30,16 @@ function setup() {
 
     resetPixels()
 
-    if (!iframe) {
+    let constraints = {
+        video: {
+            facingMode: { exact: "environment" }
+        },
+        audio: false
+    };
+    if (iframe) {
         let constraints = {
             video: {
-                facingMode: { exact: "environment" }
+                facingMode: { exact: "user" }
             },
             audio: false
         };

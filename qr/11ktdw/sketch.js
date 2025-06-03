@@ -49,6 +49,9 @@ function setup() {
     document.querySelector('input[id="speed"]')?.addEventListener('input', e => {
         moveSpeed = Number(e.target.value)
     })
+    if (iframe) {
+        moveSpeed = 1;
+    }
     textGfx = createGraphics(windowWidth, windowHeight)
     textGfx.pixelDensity(1)
     textGfx.textAlign(LEFT, CENTER)

@@ -16,6 +16,20 @@ let step, dir = 1
 let shown = false
 
 const iframe = window.self !== window.top;
+if (iframe) {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        html::-webkit-scrollbar {
+            display: none;
+        }
+        html {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight)
     background(255)
@@ -25,6 +39,7 @@ function setup() {
     pixelSize = floor(windowHeight / 150)
     if (iframe) {
         pixelSize = 5;
+
     }
 
     rows = ceil(windowHeight / pixelSize)
