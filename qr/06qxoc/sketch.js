@@ -30,12 +30,14 @@ function setup() {
 
     resetPixels()
 
-    let constraints = {
-        video: {
-            facingMode: { exact: "environment" }
-        },
-        audio: false
-    };
+    if (!iframe) {
+        let constraints = {
+            video: {
+                facingMode: { exact: "environment" }
+            },
+            audio: false
+        };
+    }
 
     navigator.mediaDevices.getUserMedia(constraints)
         .then(function (stream) {
