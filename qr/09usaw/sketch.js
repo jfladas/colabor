@@ -9,7 +9,6 @@ let mode
 let shown = false
 
 let ios = false
-let iosReady = false
 
 let first = true
 
@@ -28,7 +27,33 @@ let accelIntensity = 0
 const iframe = window.self !== window.top;
 function setup() {
     if (typeof DeviceMotionEvent.requestPermission === 'function') {
-        ios = true;
+        ios = true
+        document.body.addEventListener('click', function () {
+            DeviceMotionEvent.requestPermission()
+                .then(function () {
+                    console.log('DeviceMotionEvent enabled');
+                    DeviceMotionEvent.requestPermission()
+                        .then(function () {
+                            console.log('DeviceMotionEvent enabled');
+                        })
+                        .catch(function (error) {
+                            console.warn('DeviceMotionEvent not enabled', error);
+                        })
+                    if (first) {
+                        vid = createVideo('video.mp4', () => {
+                            vid.loop()
+                            vid.volume(0)
+                            vid.hide()
+                            vid.play()
+                        })
+                        first = false;
+                    }
+                    document.getElementById('msg').style.opacity = 0;
+                })
+                .catch(function (error) {
+                    console.warn('DeviceMotionEvent not enabled', error);
+                })
+        })
     }
 
     let side = min(windowWidth, windowHeight)
@@ -72,61 +97,25 @@ function setup() {
 
     lastMouseX = mouseX
     lastMouseY = mouseY
-
-    if (window.DeviceMotionEvent && !ios) {
-        window.addEventListener('devicemotion', function (event) {
-            let acc = event.accelerationIncludingGravity
-            if (acc) {
-                let dx = acc.x - lastAccel.x
-                let dy = acc.y - lastAccel.y
-                let dz = acc.z - lastAccel.z
-                let mag = Math.sqrt(dx * dx + dy * dy + dz * dz)
-                accelIntensity = constrain(mag / 20, 0, 1)
-                accelShake = mag > 3
-                lastAccel.x = acc.x
-                lastAccel.y = acc.y
-                lastAccel.z = acc.z
-            }
-        })
-    }
 }
 
-// iOS Compatibility
-function touchStarted() {
-    if (ios && !iosReady) {
-        DeviceMotionEvent.requestPermission()
-            .then(function () {
-                window.addEventListener('devicemotion', function (event) {
-                    let acc = event.accelerationIncludingGravity
-                    if (acc) {
-                        let dx = acc.x - lastAccel.x
-                        let dy = acc.y - lastAccel.y
-                        let dz = acc.z - lastAccel.z
-                        let mag = Math.sqrt(dx * dx + dy * dy + dz * dz)
-                        accelIntensity = constrain(mag / 20, 0, 1)
-                        accelShake = mag > 3
-                        lastAccel.x = acc.x
-                        lastAccel.y = acc.y
-                        lastAccel.z = acc.z
-                    }
-                })
-            })
-            .catch(function (error) {
-                console.warn('DeviceMotionEvent not enabled', error);
-            })
-        if (first) {
-            vid = createVideo('video.mp4', () => {
-                vid.loop()
-                vid.volume(0)
-                vid.hide()
-                vid.play()
-            })
-            first = false;
+if (window.DeviceMotionEvent) {
+    window.addEventListener('devicemotion', function (event) {
+        let acc = event.accelerationIncludingGravity
+        if (acc) {
+            let dx = acc.x - lastAccel.x
+            let dy = acc.y - lastAccel.y
+            let dz = acc.z - lastAccel.z
+            let mag = Math.sqrt(dx * dx + dy * dy + dz * dz)
+            accelIntensity = constrain(mag / 20, 0, 1)
+            accelShake = mag > 3
+            lastAccel.x = acc.x
+            lastAccel.y = acc.y
+            lastAccel.z = acc.z
         }
-        iosReady = true;
-        document.getElementById('msg').style.opacity = 0;
-    }
+    })
 }
+
 function touchMoved() {
     let dx = abs(touches[0].x - lastMouseX)
     let dy = abs(touches[0].y - lastMouseY)
