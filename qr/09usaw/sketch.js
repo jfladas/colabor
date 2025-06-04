@@ -24,6 +24,18 @@ let accelIntensity = 0
 
 const iframe = window.self !== window.top;
 function setup() {
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        document.body.addEventListener('click', function () {
+            DeviceMotionEvent.requestPermission()
+                .then(function () {
+                    console.log('DeviceMotionEvent enabled');
+                })
+                .catch(function (error) {
+                    console.warn('DeviceMotionEvent not enabled', error);
+                })
+        })
+    }
+
     let side = min(windowWidth, windowHeight)
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.position(0, 0)
