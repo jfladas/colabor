@@ -8,6 +8,9 @@ let mode
 
 let shown = false
 
+let ios = false
+let iosReady = false
+
 let first = true
 
 let vid, imgColors = []
@@ -25,15 +28,7 @@ let accelIntensity = 0
 const iframe = window.self !== window.top;
 function setup() {
     if (typeof DeviceMotionEvent.requestPermission === 'function') {
-        document.body.addEventListener('click', function () {
-            DeviceMotionEvent.requestPermission()
-                .then(function () {
-                    console.log('DeviceMotionEvent enabled');
-                })
-                .catch(function (error) {
-                    console.warn('DeviceMotionEvent not enabled', error);
-                })
-        })
+        ios = true;
     }
 
     let side = min(windowWidth, windowHeight)
@@ -53,7 +48,7 @@ function setup() {
 
     pixels = Array.from({ length: rows }, () => Array(cols).fill(0))
 
-    if (first) {
+    if (first && !ios) {
         vid = createVideo('video.mp4', () => {
             vid.loop()
             vid.volume(0)
@@ -67,6 +62,9 @@ function setup() {
 
     setTimeout(() => {
         if (!shown) {
+            if (ios) {
+                document.getElementById('msg').innerText = 'Tap to enable motion detection, then shake to reveal';
+            }
             document.getElementById('msg').style.opacity = 1;
             shown = true;
         }
@@ -75,7 +73,7 @@ function setup() {
     lastMouseX = mouseX
     lastMouseY = mouseY
 
-    if (window.DeviceMotionEvent) {
+    if (window.DeviceMotionEvent && !ios) {
         window.addEventListener('devicemotion', function (event) {
             let acc = event.accelerationIncludingGravity
             if (acc) {
@@ -90,6 +88,43 @@ function setup() {
                 lastAccel.z = acc.z
             }
         })
+    }
+}
+
+// iOS Compatibility
+function touchStarted() {
+    if (ios && !iosReady) {
+        DeviceMotionEvent.requestPermission()
+            .then(function () {
+                window.addEventListener('devicemotion', function (event) {
+                    let acc = event.accelerationIncludingGravity
+                    if (acc) {
+                        let dx = acc.x - lastAccel.x
+                        let dy = acc.y - lastAccel.y
+                        let dz = acc.z - lastAccel.z
+                        let mag = Math.sqrt(dx * dx + dy * dy + dz * dz)
+                        accelIntensity = constrain(mag / 20, 0, 1)
+                        accelShake = mag > 3
+                        lastAccel.x = acc.x
+                        lastAccel.y = acc.y
+                        lastAccel.z = acc.z
+                    }
+                })
+            })
+            .catch(function (error) {
+                console.warn('DeviceMotionEvent not enabled', error);
+            })
+        if (first) {
+            vid = createVideo('video.mp4', () => {
+                vid.loop()
+                vid.volume(0)
+                vid.hide()
+                vid.play()
+            })
+            first = false;
+        }
+        iosReady = true;
+        document.getElementById('msg').style.opacity = 0;
     }
 }
 
