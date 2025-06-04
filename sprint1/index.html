@@ -1,191 +1,183 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>colabor</title>
-    <link rel="stylesheet" href="../style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.5/lib/p5.min.js"></script>
-    <script src="../sketch.js" defer></script>
-    <script src="../script.js"></script>
-  </head>
-  <body>
-    <header>
-      <div class="more">
-        <a href="/">
-          <img
-            src="https://unpkg.com/pixelarticons@1.8.1/svg/home.svg"
-            class="icon"
-          />
-          <p>Home</p>
-        </a>
-      </div>
-      </div>
-    </header>
-    <div id="overlay"></div>
-    <div id="title">
-      <h1>Re-Code Re-Think</h1>
-      <h2><span class="slant">Sprint 1</span></h2>
-      <p>29.04.25 - 06.05.2025</p>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>colabor</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.5/lib/p5.min.js"></script>
+  <script src="../sketch.js" defer></script>
+  <script src="../script.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="more">
+      <a href="/">
+        <img src="https://unpkg.com/pixelarticons@1.8.1/svg/home.svg" class="icon" />
+        <p>Home</p>
+      </a>
     </div>
-    <div id="scroll">
-        <p>
-          For our first sprint, we chose to re-code MMVII. Gesundheit, Glück und
-          Geld im Neuen Jahr (2006) by Anton Bruhin. We were immediately drawn to
-          the visuals of the work, especially its abstract compositions and
-          pixelated textures. The piece is eye-catching and creates a strong
-          foundation to build on. The fact that it includes several components and
-          opportunities to reimagine the work was one of the main reasons why we
-          chose it. Each of us could select an aspect of the work and transform it
-          into something new through code while experimenting based on personal
-          interests and skill levels. <br /><br />
-          We could not find a lot of information about this specific work in our
-          research, so we can't say for sure how exactly Bruhin created it. We
-          found that he had created similar pieces using Microsoft Paint or
-          Microsoft Word, and we assume this one was made with similar digital
-          tools. <br /><br />
-          What fascinated me most was the visual effect that resembles the
-          interference seen when photographing a digital screen. Through research
-          I found that this phenomenon is known as the moiré effect and it occurs
-          when two similar patterns overlap at slight offsets, creating new, often
-          surprising patterns. Bruhin's work captures this sensation within a
-          static pixel grid, simulating motion and depth through simple repetition
-          or inversion. I started by building a pixel grid, since the work clearly
-          relies on pixel-based patterns. My first step was recreating a
-          background of black and white horizontal stripes. I then experimented
-          with two main techniques: obstruction, which turns areas into vertical
-          black and white stripes based on adjacent pixel colors, and inversion,
-          which flips pixel colors. <br /><br />
-          At first, I applied these to rectangles, but since many shapes in
-          Bruhin's work appear curved, I extended the approach to circles. This
-          was more challenging due to pixel calculations. By combining obstruction
-          and inversion, I could create an illusion of depth, making circles
-          appear like raised buttons. <br /><br />
-          Next, I experimented with animation, repetition, and background
-          variations. One of the most visually exciting effects came from
-          repeatedly inverting slightly offset circles. This layering technique
-          created visuals similar to the moiré patterns that initially caught my
-          attention. <br /><br />
-          Finally, I explored interactivity by adding a real-time camera layer. In
-          this version, the darker areas of the live feed are dynamically
-          obstructed, resulting in a responsive, evolving graphic.
-        </p>
-        <div class="gallery">
-          <div class="gallery-item">
-            <img src="media/eyes.png" alt="eyes">
-            <div class="gallery-overlay">
-              <h2>Eyes</h2>
-              <a href="/sprint1/eyes/" target="_blank">
-                Check it out!
-                <img
-                  src="https://unpkg.com/pixelarticons@1.8.1/svg/arrow-right.svg"
-                  class="icon"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-              <source src="media/eyes.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              <h2>Eyes</h2>
-              <a href="/sprint1/eyes/" target="_blank">
-                Check it out!
-                <img
-                  src="https://unpkg.com/pixelarticons@1.8.1/svg/arrow-right.svg"
-                  class="icon"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="media/img_01.jpg" alt="p1">
-            <div class="gallery-overlay">
-              Picture
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="media/img_02.jpg" alt="p2">
-            <div class="gallery-overlay">
-              Picture
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="media/img_03.jpg" alt="p3">
-            <div class="gallery-overlay">
-              Picture
-            </div>
-          </div>
-          <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-              <source src="media/vid_01.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              Video
-            </div>
-          </div>
-          <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-              <source src="media/vid_02.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              Video
-            </div>
-          </div>
-          <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-              <source src="media/vid_03.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              Video
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="media/img_04.jpg" alt="p4">
-            <div class="gallery-overlay">
-              Picture
-            </div>
-          </div>
-          <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-              <source src="media/vid_04.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              Video
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="media/img_05.jpg" alt="p5">
-            <div class="gallery-overlay">
-              Picture
-            </div>
-          </div>
-          <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-              <source src="media/vid_05.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              Video
-            </div>
-          </div>
-          <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-              <source src="media/vid_06.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              Video
-            </div>
-          </div>
-          <div class="gallery-item">
-            <video autoplay muted loop playsinline>
-              <source src="media/vid_07.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              Video
-            </div>
-          </div>
+    </div>
+  </header>
+  <div id="overlay"></div>
+  <div id="title">
+    <h1>Re-Code Re-Think</h1>
+    <h2><span class="slant">Sprint 1</span></h2>
+    <p>29.04.25 - 06.05.2025</p>
+  </div>
+  <div id="scroll">
+    <p>
+      For our first sprint, we chose to re-code MMVII. Gesundheit, Glück und
+      Geld im Neuen Jahr (2006) by Anton Bruhin. We were immediately drawn to
+      the visuals of the work, especially its abstract compositions and
+      pixelated textures. The piece is eye-catching and creates a strong
+      foundation to build on. The fact that it includes several components and
+      opportunities to reimagine the work was one of the main reasons why we
+      chose it. Each of us could select an aspect of the work and transform it
+      into something new through code while experimenting based on personal
+      interests and skill levels.</p>
+    <p>
+      We could not find a lot of information about this specific work in our
+      research, so we can't say for sure how exactly Bruhin created it. We
+      found that he had created similar pieces using Microsoft Paint or
+      Microsoft Word, and we assume this one was made with similar digital
+      tools.</p>
+    <p>
+      What fascinated me most was the visual effect that resembles the
+      interference seen when photographing a digital screen. Through research
+      I found that this phenomenon is known as the moiré effect and it occurs
+      when two similar patterns overlap at slight offsets, creating new, often
+      surprising patterns. Bruhin's work captures this sensation within a
+      static pixel grid, simulating motion and depth through simple repetition
+      or inversion. I started by building a pixel grid, since the work clearly
+      relies on pixel-based patterns. My first step was recreating a
+      background of black and white horizontal stripes. I then experimented
+      with two main techniques: obstruction, which turns areas into vertical
+      black and white stripes based on adjacent pixel colors, and inversion,
+      which flips pixel colors.</p>
+    <p>
+      At first, I applied these to rectangles, but since many shapes in
+      Bruhin's work appear curved, I extended the approach to circles. This
+      was more challenging due to pixel calculations. By combining obstruction
+      and inversion, I could create an illusion of depth, making circles
+      appear like raised buttons.</p>
+    <p>
+      Next, I experimented with animation, repetition, and background
+      variations. One of the most visually exciting effects came from
+      repeatedly inverting slightly offset circles. This layering technique
+      created visuals similar to the moiré patterns that initially caught my
+      attention.</p>
+    <p>
+      Finally, I explored interactivity by adding a real-time camera layer. In
+      this version, the darker areas of the live feed are dynamically
+      obstructed, resulting in a responsive, evolving graphic.
+    </p>
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="media/eyes.png" alt="eyes">
+        <div class="gallery-overlay">
+          <h2>Eyes</h2>
+          <a href="/sprint1/eyes/" target="_blank">
+            Check it out!
+            <img src="https://unpkg.com/pixelarticons@1.8.1/svg/arrow-right.svg" class="icon" />
+          </a>
         </div>
-  </body>
+      </div>
+      <div class="gallery-item">
+        <video autoplay muted loop playsinline>
+          <source src="media/eyes.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-overlay">
+          <h2>Eyes</h2>
+          <a href="/sprint1/eyes/" target="_blank">
+            Check it out!
+            <img src="https://unpkg.com/pixelarticons@1.8.1/svg/arrow-right.svg" class="icon" />
+          </a>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="media/img_01.jpg" alt="p1">
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="media/img_02.jpg" alt="p2">
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="media/img_03.jpg" alt="p3">
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <video autoplay muted loop playsinline>
+          <source src="media/vid_01.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <video autoplay muted loop playsinline>
+          <source src="media/vid_02.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <video autoplay muted loop playsinline>
+          <source src="media/vid_03.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="media/img_04.jpg" alt="p4">
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <video autoplay muted loop playsinline>
+          <source src="media/vid_04.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="media/img_05.jpg" alt="p5">
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <video autoplay muted loop playsinline>
+          <source src="media/vid_05.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <video autoplay muted loop playsinline>
+          <source src="media/vid_06.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-overlay">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <video autoplay muted loop playsinline>
+          <source src="media/vid_07.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-overlay">
+          <h2>Moiré Pixels</h2>
+          <a href="/sprint1/pixels/" target="_blank">
+            Check it out!
+            <img src="https://unpkg.com/pixelarticons@1.8.1/svg/arrow-right.svg" class="icon" />
+          </a>
+        </div>
+      </div>
+    </div>
+</body>
+
 </html>
 <style>
   #title {

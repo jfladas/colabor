@@ -18,7 +18,7 @@ function setup() {
     fill(0)
     frameRate(10)
 
-    pixelSize = floor(min(windowWidth, windowHeight) / 100)
+    pixelSize = floor(min(windowWidth, windowHeight) / 50)
     rows = ceil(windowHeight / pixelSize)
     cols = ceil(windowWidth / pixelSize)
 

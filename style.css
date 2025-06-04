@@ -193,6 +193,10 @@ header {
     color: #fff;
     text-align: right;
 
+    p {
+        margin: 0 0 0.5rem 0;
+    }
+
     .gallery {
         display: flex;
         flex-wrap: wrap;
