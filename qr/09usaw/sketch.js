@@ -88,7 +88,7 @@ function setup() {
     setTimeout(() => {
         if (!shown) {
             if (ios) {
-                document.getElementById('msg').innerText = 'Tap to enable motion detection, then shake to reveal';
+                document.getElementById('msg').innerText = 'Shake to reveal (might not work on iOS)';
             }
             document.getElementById('msg').style.opacity = 1;
             shown = true;
