@@ -127,6 +127,13 @@ function touchStarted() {
         document.getElementById('msg').style.opacity = 0;
     }
 }
+function touchMoved() {
+    let dx = abs(touches[0].x - lastMouseX)
+    let dy = abs(touches[0].y - lastMouseY)
+    lastMouseX = touches[0].x
+    lastMouseY = touches[0].y
+    detectShake()
+}
 
 function windowResized() {
     setup()
