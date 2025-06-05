@@ -28,6 +28,7 @@ const iframe = window.self !== window.top;
 function setup() {
     if (typeof DeviceMotionEvent.requestPermission === 'function') {
         ios = true
+        localStorage.setItem('qr9', 'done');
         document.body.addEventListener('click', function () {
             DeviceMotionEvent.requestPermission()
                 .then(function () {
