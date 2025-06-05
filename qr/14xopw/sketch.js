@@ -48,6 +48,10 @@ function setup() {
 
     setTimeout(() => {
         if (!shown) {
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+                document.getElementById('msg').innerHTML = 'Turn on sound, tap to produce a note (might not work on iOS)';
+                localStorage.setItem('qr14', 'done');
+            }
             document.getElementById('msg').style.opacity = 1;
             shown = true;
         }

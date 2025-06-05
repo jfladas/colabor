@@ -28,7 +28,6 @@ const iframe = window.self !== window.top;
 function setup() {
     if (typeof DeviceMotionEvent.requestPermission === 'function') {
         ios = true
-        localStorage.setItem('qr9', 'done');
         document.body.addEventListener('click', function () {
             DeviceMotionEvent.requestPermission()
                 .then(function () {
@@ -93,6 +92,7 @@ function setup() {
             }
             document.getElementById('msg').style.opacity = 1;
             shown = true;
+            localStorage.setItem('qr9', 'done');
         }
     }, 3000);
 
