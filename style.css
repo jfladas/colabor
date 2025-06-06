@@ -216,6 +216,17 @@ header {
             position: relative;
             display: inline-block;
             background-color: #000;
+
+            .download {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                width: 30vw;
+                height: 30vw;
+                color: #babac4;
+            }
         }
 
         .gallery-overlay {
@@ -249,6 +260,105 @@ header {
 
         .gallery-item:hover .gallery-overlay {
             opacity: 1;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+
+        a {
+            width: 100vw;
+            min-height: 5rem;
+            font-size: 2.5rem;
+            height: auto;
+            padding-top: 1rem;
+            background-color: #000;
+            color: #fff;
+            font-variation-settings:
+                'wdth' 150,
+                'wght' 1000;
+
+            .text {
+                opacity: 1;
+                max-width: unset;
+
+                h3 {
+                    font-size: 1.5rem;
+                    padding: 0.5rem;
+                    writing-mode: horizontal-tb;
+                    text-orientation: upright;
+                    width: fit-content;
+                    font-variation-settings:
+                        'wdth' 120,
+                        'wght' 400,
+                        'slnt' -10;
+                    color: #babac4;
+                }
+
+                p {
+                    display: none;
+                }
+            }
+        }
+
+        a:hover {
+            height: auto;
+            background-color: #fff;
+            color: #000;
+
+            .text {
+                opacity: 1;
+                writing-mode: tb;
+
+                h3 {
+                    font-variation-settings:
+                        'wdth' 120,
+                        'wght' 400,
+                        'slnt' 0;
+                    color: #000;
+                }
+
+            }
+        }
+
+        .more {
+            width: 100vw;
+            height: auto;
+            flex-wrap: wrap;
+
+            a {
+                width: 50vw;
+                height: 4rem;
+                padding: 0;
+                gap: 0.25rem;
+
+                .icon {
+                    filter: invert(1);
+                    padding-top: 2rem
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+            }
+
+            a:hover {
+                height: 4rem;
+                background-color: #fff;
+                color: #000;
+
+                .icon {
+                    transform: scale(1.2);
+                    filter: invert(0);
+                }
+
+                p {
+                    color: #000;
+                }
+            }
         }
     }
 }
