@@ -58,6 +58,7 @@ header {
     display: flex;
     align-items: flex-start;
     user-select: none;
+    z-index: 3;
 
     a {
         text-decoration: none;
@@ -188,6 +189,11 @@ header {
     }
 }
 
+#title.dp {
+    top: 3rem;
+    bottom: unset;
+}
+
 #scroll {
     padding: 25vw 3rem 3rem 25vw;
     color: #fff;
@@ -216,6 +222,8 @@ header {
             position: relative;
             display: inline-block;
             background-color: #000;
+            width: 30vw;
+            height: 30vw;
 
             .download {
                 display: flex;
@@ -264,61 +272,83 @@ header {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
+    #title {
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+    }
+
+    #title.dp {
+        top: 6rem;
+        max-width: calc(100vw - 3rem);
+        right: 2rem;
+    }
+
+    #scroll {
+        padding: 20rem 1rem 3rem 3rem;
+
+        .gallery {
+
+            img,
+            video {
+                width: calc(100vw - 6rem);
+                height: calc(100vw - 6rem);
+            }
+
+            .gallery-item {
+                width: calc(100vw - 6rem);
+                height: calc(100vw - 6rem);
+
+                .download {
+                    width: calc(100vw - 6rem);
+                    height: calc(100vw - 6rem);
+                }
+            }
+
+            .gallery-overlay {
+                width: calc(100vw - 6rem);
+                height: calc(100vw - 6rem);
+            }
+
+
+        }
+    }
+
     header {
         flex-direction: column;
         align-items: stretch;
 
         a {
             width: 100vw;
-            min-height: 5rem;
+            min-height: 4rem;
             font-size: 2.5rem;
             height: auto;
             padding-top: 1rem;
-            background-color: #000;
-            color: #fff;
             font-variation-settings:
                 'wdth' 150,
                 'wght' 1000;
 
+
+
             .text {
-                opacity: 1;
-                max-width: unset;
-
-                h3 {
-                    font-size: 1.5rem;
-                    padding: 0.5rem;
-                    writing-mode: horizontal-tb;
-                    text-orientation: upright;
-                    width: fit-content;
-                    font-variation-settings:
-                        'wdth' 120,
-                        'wght' 400,
-                        'slnt' -10;
-                    color: #babac4;
-                }
-
-                p {
-                    display: none;
-                }
+                display: none;
             }
         }
 
         a:hover {
             height: auto;
-            background-color: #fff;
-            color: #000;
 
             .text {
                 opacity: 1;
                 writing-mode: tb;
 
                 h3 {
-                    font-variation-settings:
-                        'wdth' 120,
-                        'wght' 400,
-                        'slnt' 0;
-                    color: #000;
+                    color: #fff;
                 }
 
             }
@@ -331,34 +361,37 @@ header {
 
             a {
                 width: 50vw;
-                height: 4rem;
-                padding: 0;
+                height: auto;
+                min-height: 4rem;
+                padding: 0.5rem 0;
+                justify-content: center;
                 gap: 0.25rem;
 
                 .icon {
-                    filter: invert(1);
-                    padding-top: 2rem
+                    padding-top: 0;
                 }
 
                 p {
                     font-size: 1rem;
+                    color: #000;
                 }
             }
 
             a:hover {
                 height: 4rem;
-                background-color: #fff;
-                color: #000;
 
                 .icon {
                     transform: scale(1.2);
-                    filter: invert(0);
                 }
 
                 p {
-                    color: #000;
+                    color: #fff;
                 }
             }
+        }
+
+        .more.dp a {
+            width: 100vw;
         }
     }
 }

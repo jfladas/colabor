@@ -1,73 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview</title>
-    <link rel="stylesheet" href="style.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <div id="overlay">
-      <h1>Pretty empty here, huh?</h1>
-      <h2>Looks like you haven't discovered any of the pages yet...</h2>
-      <h2>Try scanning the smaller QR codes that make up the big one!</h2>
-      <h1>Alternatively...</h1>
-      <h2>You can click on the button below to unlock all pages:</h2>
-      <button id="unlockButton" onclick="unlockAll()">
-        <img
-          src="https://unpkg.com/pixelarticons@1.8.1/svg/lock-open.svg"
-          class="icon"
-        />
-        Unlock All Pages
-      </button>
-      <h2>Note that this will remove the possibility to unlock page #16</h2>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico?">
+  <script type="module" src="script.js"></script>
+</head>
+
+<body>
+  <div id="overlay">
+    <h1>Pretty empty here, huh?</h1>
+    <h2>Looks like you haven't discovered any of the pages yet...</h2>
+    <h2>Try scanning the smaller QR codes that make up the big one!</h2>
+    <h1>Alternatively...</h1>
+    <h2>You can click on the button below to unlock all pages:</h2>
+    <button id="unlockButton" onclick="unlockAll()">
+      <img src="https://unpkg.com/pixelarticons@1.8.1/svg/lock-open.svg" class="icon" />
+      Unlock All Pages
+    </button>
+    <h2>Note that this will remove the possibility to unlock page #16</h2>
+  </div>
+  <div id="options">
+    <div class="close">
+      <img src="https://unpkg.com/pixelarticons@1.8.1/svg/close.svg" class="icon"
+        onclick="document.getElementById('options').style.display='none';" />
     </div>
-    <div id="options">
-      <div class="close">
-        <img
-          src="https://unpkg.com/pixelarticons@1.8.1/svg/close.svg"
-          class="icon"
-          onclick="document.getElementById('options').style.display='none';"
-        />
-      </div>
-      <h1>Unlock</h1>
-      <h2>You can click on the button below to unlock all pages:</h2>
-      <button id="unlockButton" onclick="unlockAll()">
-        <img
-          src="https://unpkg.com/pixelarticons@1.8.1/svg/lock-open.svg"
-          class="icon"
-        />
-        Unlock All Pages
-      </button>
-      <h2>Note that this will remove the possibility to unlock page #16</h2>
-      <h1>Reset</h1>
-      <h2>
-        You can click on the button below to reset your progress and start over:
-      </h2>
-      <button
-        id="resetButton"
-        onclick="localStorage.clear(); location.reload()"
-      >
-        <img
-          src="https://unpkg.com/pixelarticons@1.8.1/svg/reload.svg"
-          class="icon"
-        />
-        Reset Progress
-      </button>
-      <h2>This will restore the possibility to unlock page #16</h2>
-    </div>
-    <div id="container"></div>
-  </body>
-  <script>
-    function unlockAll() {
-      for (let i = 1; i <= 15; i++) {
-        if (localStorage.getItem(`qr${i}`) !== "done") {
-          localStorage.setItem(`qr${i}`, "found");
-        }
+    <h1>Unlock</h1>
+    <h2>You can click on the button below to unlock all pages:</h2>
+    <button id="unlockButton" onclick="unlockAll()">
+      <img src="https://unpkg.com/pixelarticons@1.8.1/svg/lock-open.svg" class="icon" />
+      Unlock All Pages
+    </button>
+    <h2>Note that this will remove the possibility to unlock page #16</h2>
+    <h1>Reset</h1>
+    <h2>
+      You can click on the button below to reset your progress and start over:
+    </h2>
+    <button id="resetButton" onclick="localStorage.clear(); location.reload()">
+      <img src="https://unpkg.com/pixelarticons@1.8.1/svg/reload.svg" class="icon" />
+      Reset Progress
+    </button>
+    <h2>This will restore the possibility to unlock page #16</h2>
+  </div>
+  <div id="container"></div>
+</body>
+<script>
+  function unlockAll() {
+    for (let i = 1; i <= 15; i++) {
+      if (localStorage.getItem(`qr${i}`) !== "done") {
+        localStorage.setItem(`qr${i}`, "found");
       }
-      localStorage.setItem("final", "no");
-      location.reload();
     }
-  </script>
+    localStorage.setItem("final", "no");
+    location.reload();
+  }
+</script>
+
 </html>
