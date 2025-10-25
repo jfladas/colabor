@@ -47,7 +47,7 @@ function getQrSuffix(n) {
         "cimy", "kxpd", "zses", "hdti",
         "xdvb", "qxoc", "fqwq", "ymgo",
         "usaw", "ejzy", "ktdw", "swor",
-        "hbem", "xopv", "vrys", "trjr"
+        "hbem", "xopw", "vrys", "trjr"
     ];
     return suffixes[n - 1];
 }
